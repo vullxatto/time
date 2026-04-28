@@ -1,0 +1,231 @@
+{
+  "clients": [
+    {
+      "code": 1,
+      "surname": "Фернандес",
+      "name": "Люсия",
+      "secname": "Карлосовна",
+      "address": "г. Самара, JSON-витрина: ул. Плаза, д. 3",
+      "phone": "+7 (846) 701-11-11"
+    },
+    {
+      "code": 2,
+      "surname": "Бернар",
+      "name": "Пьер",
+      "secname": "Жанович",
+      "address": "г. Ростов-на-Дону, наб. Донская, д. 40",
+      "phone": "+7 (863) 702-22-22"
+    },
+    {
+      "code": 3,
+      "surname": "Конти",
+      "name": "Валерия",
+      "secname": "Маркоевна",
+      "address": "г. Волгоград, ул. Европейская, д. 6",
+      "phone": "+7 (844) 703-33-33"
+    },
+    {
+      "code": 4,
+      "surname": "Шмидт",
+      "name": "Ольга",
+      "secname": "Гансовна",
+      "address": "г. Калининград, ул. Янтарная, д. 11",
+      "phone": "+7 (401) 704-44-44"
+    },
+    {
+      "code": 5,
+      "surname": "Росси",
+      "name": "Марко",
+      "secname": "Алессандрович",
+      "address": "г. Краснодар, ул. Морская, д. 19",
+      "phone": "+7 (861) 705-55-55"
+    }
+  ],
+  "routes": [
+    {
+      "code": 1,
+      "name": "Испания, Коста-Брава (JSON)",
+      "climate": "Средиземноморский",
+      "duration": 8,
+      "hotel": "Hotel JSON Sol 4*",
+      "cost": 88000
+    },
+    {
+      "code": 2,
+      "name": "Италия, Рим и Флоренция",
+      "climate": "Умеренный",
+      "duration": 9,
+      "hotel": "Boutique JSON Arte 4*",
+      "cost": 102000
+    },
+    {
+      "code": 3,
+      "name": "Франция, Ницца",
+      "climate": "Средиземноморский",
+      "duration": 6,
+      "hotel": "Promenade JSON 5*",
+      "cost": 115000
+    },
+    {
+      "code": 4,
+      "name": "Кипр, Лимассол",
+      "climate": "Сухой тёплый",
+      "duration": 7,
+      "hotel": "Resort JSON Bay 5*",
+      "cost": 72000
+    },
+    {
+      "code": 5,
+      "name": "Мальдивы, атолл JSON",
+      "climate": "Тропический",
+      "duration": 10,
+      "hotel": "Water Villa JSON 5*",
+      "cost": 210000
+    }
+  ],
+  "travels": [
+    {
+      "code": 1,
+      "date": "10.04.2026",
+      "quantity": 2,
+      "discount": 6,
+      "clients": [
+        1,
+        2
+      ],
+      "routes": [
+        1
+      ],
+      "airline_code": 1,
+      "touroperator_code": 1
+    },
+    {
+      "code": 5,
+      "date": "22.06.2026",
+      "quantity": 2,
+      "discount": 14,
+      "clients": [
+        2,
+        4
+      ],
+      "routes": [
+        3,
+        4,
+        5
+      ],
+      "airline_code": 3,
+      "touroperator_code": 3
+    },
+    {
+      "code": 4,
+      "date": "07.06.2026",
+      "quantity": 4,
+      "discount": 11,
+      "clients": [
+        1,
+        3,
+        5
+      ],
+      "routes": [
+        1,
+        5
+      ],
+      "airline_code": 3,
+      "touroperator_code": 5
+    },
+    {
+      "code": 3,
+      "date": "25.05.2026",
+      "quantity": 1,
+      "discount": 0,
+      "clients": [
+        4,
+        5
+      ],
+      "routes": [
+        4
+      ],
+      "airline_code": 2,
+      "touroperator_code": 5
+    },
+    {
+      "code": 2,
+      "date": "18.05.2026",
+      "quantity": 3,
+      "discount": 9,
+      "clients": [
+        3
+      ],
+      "routes": [
+        2,
+        3
+      ],
+      "airline_code": 2,
+      "touroperator_code": 5
+    }
+  ],
+  "airlines": [
+    {
+      "code": 1,
+      "name": "Iberia JSON-demo",
+      "flight_cost": 35000
+    },
+    {
+      "code": 2,
+      "name": "Alitalia JSON-сегмент",
+      "flight_cost": 41000
+    },
+    {
+      "code": 3,
+      "name": "Air France JSON",
+      "flight_cost": 38000
+    },
+    {
+      "code": 4,
+      "name": "Cyprus Airways JSON",
+      "flight_cost": 29000
+    },
+    {
+      "code": 5,
+      "name": "Emirates JSON-острова",
+      "flight_cost": 95000
+    }
+  ],
+  "touroperators": [
+    {
+      "code": 1,
+      "name": "«JSON-Европа Трэвел»",
+      "address": "Самара, шоу-рум JSON, ул. Волжская, 10",
+      "phone": "+7 (846) 900-JSON-1",
+      "website": "https://json-europe-demo.example"
+    },
+    {
+      "code": 2,
+      "name": "«Рим JSON»",
+      "address": "Ростов-на-Дону, офис JSON, ул. Итальянская, 4",
+      "phone": "+7 (863) 900-JSON-2",
+      "website": "https://json-rome-demo.example"
+    },
+    {
+      "code": 3,
+      "name": "«Ницца JSON»",
+      "address": "Волгоград, бюро JSON, пл. Франции, 2",
+      "phone": "+7 (844) 900-JSON-3",
+      "website": "https://json-nice-demo.example"
+    },
+    {
+      "code": 4,
+      "name": "«Кипр JSON»",
+      "address": "Калининград, стойка JSON, ул. Солнечная, 8",
+      "phone": "+7 (401) 900-JSON-4",
+      "website": "https://json-cyprus-demo.example"
+    },
+    {
+      "code": 5,
+      "name": "«Мальдивы JSON»",
+      "address": "Краснодар, павильон JSON, ул. Океанская, 1",
+      "phone": "+7 (861) 900-JSON-5",
+      "website": "https://json-maldives-demo.example"
+    }
+  ]
+}
