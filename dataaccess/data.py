@@ -1,3 +1,6 @@
+"""Базовый класс доступа к данным: входной/выходной файл, библиотека."""
+
+
 class data:
 
     def __init__(self, lib=None, inp='', out=''):
@@ -38,7 +41,7 @@ class data:
         self.write()
 
     def read(self):
-        pass
+        raise NotImplementedError
 
     def write(self):
-        pass
+        raise NotImplementedError

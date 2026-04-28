@@ -1,61 +1,83 @@
+"""Чтение/запись данных в XML (3 базовые сущности)."""
+
 import xml.dom.minidom
 from dataaccess.data import data
+
 
 class dataxml(data):
 
     def read(self):
         dom = xml.dom.minidom.parse(self.getInp())
         dom.normalize()
-        root = dom.childNodes[0]
+        root = dom.documentElement
         for node in root.childNodes:
-            if node.nodeType == node.ELEMENT_NODE:
-                if node.nodeName == 'clients':
-                    self.readClients(node)
-                elif node.nodeName == 'routes':
-                    self.readRoutes(node)
-                elif node.nodeName == 'travels':
-                    self.readTravels(node)
+            if node.nodeType != node.ELEMENT_NODE:
+                continue
+            if node.nodeName == 'clients':
+                self.readClients(node)
+            elif node.nodeName == 'routes':
+                self.readRoutes(node)
+            elif node.nodeName == 'travels':
+                self.readTravels(node)
 
     def readClients(self, node):
         for cl in node.getElementsByTagName('client'):
-            code = int(cl.getAttribute('code') or 0)
-            surname = cl.getAttribute('surname') or ''
-            name = cl.getAttribute('name') or ''
-            secname = cl.getAttribute('secname') or ''
-            address = cl.getAttribute('address') or ''
-            phone = cl.getAttribute('phone') or ''
-            self.getLib().createClient(code, surname, name, secname, address, phone)
+            self.getLib().createClient(
+                int(cl.getAttribute('code') or 0),
+                cl.getAttribute('surname') or '',
+                cl.getAttribute('name') or '',
+                cl.getAttribute('secname') or '',
+                cl.getAttribute('address') or '',
+                cl.getAttribute('phone') or '',
+            )
 
     def readRoutes(self, node):
         for rt in node.getElementsByTagName('route'):
-            code = int(rt.getAttribute('code') or 0)
-            name = rt.getAttribute('name') or ''
-            climate = rt.getAttribute('climate') or ''
-            duration = int(rt.getAttribute('duration') or 0)
-            hotel = rt.getAttribute('hotel') or ''
-            cost = int(rt.getAttribute('cost') or 0)
-            self.getLib().createRoute(code, name, climate, duration, hotel, cost)
+            self.getLib().createRoute(
+                int(rt.getAttribute('code') or 0),
+                rt.getAttribute('name') or '',
+                rt.getAttribute('climate') or '',
+                int(rt.getAttribute('duration') or 0),
+                rt.getAttribute('hotel') or '',
+                int(rt.getAttribute('cost') or 0),
+            )
 
     def readTravels(self, node):
         for tr in node.getElementsByTagName('travel'):
-            code = int(tr.getAttribute('code') or 0)
-            date = tr.getAttribute('date') or ''
-            quantity = int(tr.getAttribute('quantity') or 0)
-            discount = int(tr.getAttribute('discount') or 0)
-            travel = self.getLib().createTravel(code, date, quantity, discount)
-            for c in tr.getElementsByTagName('client'):
-                client_code = int(c.getAttribute('code') or 0)
-                if client_code:
-                    travel.appendClient(client_code)
-            for r in tr.getElementsByTagName('route'):
-                route_code = int(r.getAttribute('code') or 0)
-                if route_code:
-                    travel.appendRoute(route_code)
+            travel = self.getLib().createTravel(
+                int(tr.getAttribute('code') or 0),
+                tr.getAttribute('date') or '',
+                int(tr.getAttribute('quantity') or 0),
+                int(tr.getAttribute('discount') or 0),
+            )
+            if travel is None:
+                continue
+            # Берём только прямых детей, чтобы не подхватить вложенные client/route
+            for child in tr.childNodes:
+                if child.nodeType != child.ELEMENT_NODE:
+                    continue
+                if child.nodeName == 'clients':
+                    for c in child.getElementsByTagName('client'):
+                        cc = int(c.getAttribute('code') or 0)
+                        if cc:
+                            travel.appendClient(cc)
+                elif child.nodeName == 'routes':
+                    for r in child.getElementsByTagName('route'):
+                        rc = int(r.getAttribute('code') or 0)
+                        if rc:
+                            travel.appendRoute(rc)
 
     def write(self):
         dom = xml.dom.minidom.Document()
         root = dom.createElement('travelcompany')
         dom.appendChild(root)
+        self._writeClients(dom, root)
+        self._writeRoutes(dom, root)
+        self._writeTravels(dom, root)
+        with open(self.getOut(), 'w', encoding='utf-8') as f:
+            f.write(dom.toprettyxml(indent='  '))
+
+    def _writeClients(self, dom, root):
         clients = dom.createElement('clients')
         root.appendChild(clients)
         for c in self.getLib().getClientList():
@@ -67,6 +89,8 @@ class dataxml(data):
             cl.setAttribute('address', c.getAddress() or '')
             cl.setAttribute('phone', c.getPhone() or '')
             clients.appendChild(cl)
+
+    def _writeRoutes(self, dom, root):
         routes = dom.createElement('routes')
         root.appendChild(routes)
         for r in self.getLib().getRouteList():
@@ -78,6 +102,8 @@ class dataxml(data):
             rt.setAttribute('hotel', r.getHotel() or '')
             rt.setAttribute('cost', str(r.getCost()))
             routes.appendChild(rt)
+
+    def _writeTravels(self, dom, root):
         travels = dom.createElement('travels')
         root.appendChild(travels)
         for t in self.getLib().getTravelList():
@@ -99,15 +125,3 @@ class dataxml(data):
                 rt_elem.appendChild(r)
             tr.appendChild(rt_elem)
             travels.appendChild(tr)
-        with open(self.getOut(), 'w', encoding='utf-8') as f:
-            f.write(dom.toprettyxml(indent='  '))
-
-    def readFile(self, filename=''):
-        if filename:
-            self.setInp(filename)
-        self.read()
-
-    def writeFile(self, filename=''):
-        if filename:
-            self.setOut(filename)
-        self.write()

@@ -1,6 +1,10 @@
+"""Маршрут (направление путешествия)."""
+
 from domain.namedentity import namedentity
 
+
 class route(namedentity):
+    """Туристический маршрут с климатом, длительностью, отелем и стоимостью."""
 
     def __init__(self, code=0, name='', climate='', duration=0, hotel='', cost=0):
         super().__init__(code, name)

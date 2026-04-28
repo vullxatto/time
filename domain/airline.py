@@ -1,6 +1,10 @@
-from namedentity import namedentity
+"""Авиаперевозчик — авиакомпания, выполняющая перелёт по путёвке."""
+
+from domain.namedentity import namedentity
+
 
 class airline(namedentity):
+    """Авиакомпания со стоимостью авиаперелёта."""
 
     def __init__(self, code=0, name='', flight_cost=0):
         super().__init__(code, name)

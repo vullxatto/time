@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5eadc8c-15a0-4e88-9923-f57ed38e3abe" name="Changes" comment="" />
+    <list default="true" id="e3fbf79f-0923-4ca0-8597-31d19706d061" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="3BoASh1k80Hw5xkcifUbAayzFSP" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="3CzRK5Cr1mCBZm7wxAyU4OyvyhH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -21,10 +20,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.start.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "ai.playground.ignore.import.keys.banner.in.settings": "true",
-    "last_opened_file_path": "D:/University/ООП/Task6",
-    "vue.rearranger.settings.migration": "true"
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/University/Курсовая/travel"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -36,12 +33,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d5eadc8c-15a0-4e88-9923-f57ed38e3abe" name="Changes" comment="" />
-      <created>1775145053547</created>
+      <changelist id="e3fbf79f-0923-4ca0-8597-31d19706d061" name="Changes" comment="" />
+      <created>1777386344300</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1775145053547</updated>
-      <workItem from="1775145056053" duration="25000" />
+      <updated>1777386344300</updated>
     </task>
     <servers />
   </component>

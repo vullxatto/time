@@ -1,0 +1,100 @@
+// Иерархия сущностей предметной области
+// Рендер: dot -Tpng class_entities.dot -o class_entities.png
+
+digraph Entities {
+    rankdir=BT;
+    fontname="Helvetica";
+    node [shape=plaintext, fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9, arrowhead=onormal];
+
+    entity [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#e8e8e8"><B>entity</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- code: int</TD></TR>
+          <TR><TD ALIGN="LEFT">+ getCode() : int<BR ALIGN="LEFT"/>+ setCode(value)<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    namedentity [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#e8e8e8"><B>namedentity</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- name: str</TD></TR>
+          <TR><TD ALIGN="LEFT">+ getName() : str<BR ALIGN="LEFT"/>+ setName(value)<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    client [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#fff3cd"><B>client</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- surname: str<BR ALIGN="LEFT"/>- secname: str<BR ALIGN="LEFT"/>- address: str<BR ALIGN="LEFT"/>- phone: str<BR ALIGN="LEFT"/></TD></TR>
+          <TR><TD ALIGN="LEFT">+ getClientInfo() : str<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    route [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#fff3cd"><B>route</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- climate: str<BR ALIGN="LEFT"/>- duration: int<BR ALIGN="LEFT"/>- hotel: str<BR ALIGN="LEFT"/>- cost: int<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    package [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#fff3cd"><B>package</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- date: str<BR ALIGN="LEFT"/>- quantity: int<BR ALIGN="LEFT"/>- discount: int<BR ALIGN="LEFT"/>- clients: list[client]<BR ALIGN="LEFT"/>- routes: list[route]<BR ALIGN="LEFT"/></TD></TR>
+          <TR><TD ALIGN="LEFT">+ appendClient(value)<BR ALIGN="LEFT"/>+ removeClient(value)<BR ALIGN="LEFT"/>+ appendRoute(value)<BR ALIGN="LEFT"/>+ removeRoute(value)<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    airline [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#d1e7dd"><B>airline</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- flight_cost: int<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    touroperator [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#d1e7dd"><B>touroperator</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- address: str<BR ALIGN="LEFT"/>- phone: str<BR ALIGN="LEFT"/>- website: str<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    manager [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#d1e7dd"><B>manager</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- surname: str<BR ALIGN="LEFT"/>- secname: str<BR ALIGN="LEFT"/>- position: str<BR ALIGN="LEFT"/>- phone: str<BR ALIGN="LEFT"/>- email: str<BR ALIGN="LEFT"/></TD></TR>
+          <TR><TD ALIGN="LEFT">+ getFullName() : str<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    payment [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#d1e7dd"><B>payment</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- package_code: int<BR ALIGN="LEFT"/>- date: str<BR ALIGN="LEFT"/>- amount: int<BR ALIGN="LEFT"/>- method: str<BR ALIGN="LEFT"/>- status: str<BR ALIGN="LEFT"/></TD></TR>
+          <TR><TD ALIGN="LEFT">+ isPaid() : bool<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    package_ext [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+          <TR><TD BGCOLOR="#cfe2ff"><B>package_ext</B></TD></TR>
+          <TR><TD ALIGN="LEFT">- airline_code: int<BR ALIGN="LEFT"/>- touroperator_code: int<BR ALIGN="LEFT"/>- manager_code: int<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>>];
+
+    legend [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="3">
+          <TR><TD COLSPAN="2"><B>обозначения</B></TD></TR>
+          <TR><TD BGCOLOR="#e8e8e8" WIDTH="20"></TD><TD ALIGN="LEFT">базовые классы</TD></TR>
+          <TR><TD BGCOLOR="#fff3cd" WIDTH="20"></TD><TD ALIGN="LEFT">базовая модель</TD></TR>
+          <TR><TD BGCOLOR="#d1e7dd" WIDTH="20"></TD><TD ALIGN="LEFT">расширенная модель</TD></TR>
+          <TR><TD BGCOLOR="#cfe2ff" WIDTH="20"></TD><TD ALIGN="LEFT">наследник</TD></TR>
+        </TABLE>>];
+
+    namedentity -> entity;
+    package     -> entity;
+    payment     -> entity;
+    client       -> namedentity;
+    route        -> namedentity;
+    airline      -> namedentity;
+    touroperator -> namedentity;
+    manager      -> namedentity;
+    package_ext  -> package;
+
+    edge [arrowhead=none, style=dashed];
+    package -> client [label="M:N"];
+    package -> route  [label="M:N"];
+
+    {rank=sink; legend;}
+}

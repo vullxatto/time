@@ -1,5 +1,8 @@
+"""Чтение/запись данных в JSON (3 базовые сущности)."""
+
 import json
 from dataaccess.data import data
+
 
 class datajson(data):
 
@@ -7,94 +10,58 @@ class datajson(data):
         return self.__data
 
     def read(self):
-        with open(self.getInp(), 'r', encoding='utf-8') as read_file:
-            self.__data = json.load(read_file)
+        with open(self.getInp(), 'r', encoding='utf-8') as f:
+            self.__data = json.load(f)
         self.readLists()
 
     def write(self):
         self.__data = {}
         self.writeLists()
-        with open(self.getOut(), 'w', encoding='utf-8') as write_file:
-            json.dump(self.__data, write_file, indent=2, ensure_ascii=False)
+        with open(self.getOut(), 'w', encoding='utf-8') as f:
+            json.dump(self.__data, f, indent=2, ensure_ascii=False)
 
     def readClients(self):
-        if 'clients' in self.getData().keys():
-            for a in self.getData()['clients']:
-                code, surname, name, secname, address, phone = (0, '', '', '', '', '')
-                for ak in a.keys():
-                    if ak == 'code':
-                        code = a[ak]
-                    if ak == 'surname':
-                        surname = a[ak]
-                    if ak == 'name':
-                        name = a[ak]
-                    if ak == 'secname':
-                        secname = a[ak]
-                    if ak == 'address':
-                        address = a[ak]
-                    if ak == 'phone':
-                        phone = a[ak]
-                self.getLib().createClient(code, surname, name, secname, address, phone)
+        for a in self.getData().get('clients', []):
+            self.getLib().createClient(
+                a.get('code', 0),
+                a.get('surname', ''),
+                a.get('name', ''),
+                a.get('secname', ''),
+                a.get('address', ''),
+                a.get('phone', ''),
+            )
 
     def readRoutes(self):
-        if 'routes' in self.getData().keys():
-            for a in self.getData()['routes']:
-                code, name, climate, duration, hotel, cost = (0, '', '', 0, '', 0)
-                for ak in a.keys():
-                    if ak == 'code':
-                        code = a[ak]
-                    if ak == 'name':
-                        name = a[ak]
-                    if ak == 'climate':
-                        climate = a[ak]
-                    if ak == 'duration':
-                        duration = a[ak]
-                    if ak == 'hotel':
-                        hotel = a[ak]
-                    if ak == 'cost':
-                        cost = a[ak]
-                self.getLib().createRoute(code, name, climate, duration, hotel, cost)
+        for a in self.getData().get('routes', []):
+            self.getLib().createRoute(
+                a.get('code', 0),
+                a.get('name', ''),
+                a.get('climate', ''),
+                a.get('duration', 0),
+                a.get('hotel', ''),
+                a.get('cost', 0),
+            )
 
     def readTravels(self):
-        if 'travels' not in self.getData():
-            return
-        for a in self.getData()['travels']:
+        for a in self.getData().get('travels', []):
             code = a.get('code', 0)
-            date = a.get('date', '')
-            quantity = a.get('quantity', 0)
-            discount = a.get('discount', 0)
-            clients = a.get('clients', [])
-            routes = a.get('routes', [])
-            try:
-                travel = self.getLib().createTravel(code, date, quantity, discount)
-            except Exception as e:
-                print(f'Ошибка создания путёвки {code}: {e}')
-                continue
+            travel = self.getLib().createTravel(
+                code, a.get('date', ''), a.get('quantity', 0), a.get('discount', 0)
+            )
             if travel is None:
-                print(f'Путёвка с кодом {code} не создана')
                 continue
-            for c in clients:
+            for c in a.get('clients', []) or []:
                 if c is None:
                     continue
-                try:
-                    client_obj = self.getLib().getClient(c)
-                    if client_obj is not None:
-                        travel.appendClient(client_obj)
-                    else:
-                        print(f'Пропущен клиент {c} в путёвке {code} (не найден)')
-                except Exception as e:
-                    print(f'Ошибка добавления клиента {c} в путёвку {code}: {e}')
-            for r in routes:
+                obj = self.getLib().getClient(c)
+                if obj is not None:
+                    travel.appendClient(obj)
+            for r in a.get('routes', []) or []:
                 if r is None:
                     continue
-                try:
-                    route_obj = self.getLib().getRoute(r)
-                    if route_obj is not None:
-                        travel.appendRoute(route_obj)
-                    else:
-                        print(f'Пропущен маршрут {r} в путёвке {code} (не найден)')
-                except Exception as e:
-                    print(f'Ошибка добавления маршрута {r} в путёвку {code}: {e}')
+                obj = self.getLib().getRoute(r)
+                if obj is not None:
+                    travel.appendRoute(obj)
 
     def readLists(self):
         self.readClients()
@@ -102,40 +69,43 @@ class datajson(data):
         self.readTravels()
 
     def writeClients(self):
-        self.getData()['clients'] = []
-        for a in self.getLib().getClientList():
-            ad = {}
-            ad['code'] = a.getCode()
-            ad['surname'] = a.getSurname()
-            ad['name'] = a.getName()
-            ad['secname'] = a.getSecname()
-            ad['address'] = a.getAddress()
-            ad['phone'] = a.getPhone()
-            self.getData()['clients'].append(ad)
+        self.getData()['clients'] = [
+            {
+                'code': c.getCode(),
+                'surname': c.getSurname(),
+                'name': c.getName(),
+                'secname': c.getSecname(),
+                'address': c.getAddress(),
+                'phone': c.getPhone(),
+            }
+            for c in self.getLib().getClientList()
+        ]
 
     def writeRoutes(self):
-        self.getData()['routes'] = []
-        for r in self.getLib().getRouteList():
-            rd = {}
-            rd['code'] = r.getCode()
-            rd['name'] = r.getName()
-            rd['climate'] = r.getClimate()
-            rd['duration'] = r.getDuration()
-            rd['hotel'] = r.getHotel()
-            rd['cost'] = r.getCost()
-            self.getData()['routes'].append(rd)
+        self.getData()['routes'] = [
+            {
+                'code': r.getCode(),
+                'name': r.getName(),
+                'climate': r.getClimate(),
+                'duration': r.getDuration(),
+                'hotel': r.getHotel(),
+                'cost': r.getCost(),
+            }
+            for r in self.getLib().getRouteList()
+        ]
 
     def writeTravels(self):
-        self.getData()['travels'] = []
-        for t in self.getLib().getTravelList():
-            td = {}
-            td['code'] = t.getCode()
-            td['date'] = t.getDate()
-            td['quantity'] = t.getQuantity()
-            td['discount'] = t.getDiscount()
-            td['clients'] = t.getClientCodes()
-            td['routes'] = t.getRouteCodes()
-            self.getData()['travels'].append(td)
+        self.getData()['travels'] = [
+            {
+                'code': t.getCode(),
+                'date': t.getDate(),
+                'quantity': t.getQuantity(),
+                'discount': t.getDiscount(),
+                'clients': t.getClientCodes(),
+                'routes': t.getRouteCodes(),
+            }
+            for t in self.getLib().getTravelList()
+        ]
 
     def writeLists(self):
         self.writeClients()

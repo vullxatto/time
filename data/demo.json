@@ -2,230 +2,257 @@
   "clients": [
     {
       "code": 1,
-      "surname": "Фернандес",
-      "name": "Люсия",
-      "secname": "Карлосовна",
-      "address": "г. Самара, JSON-витрина: ул. Плаза, д. 3",
-      "phone": "+7 (846) 701-11-11"
+      "surname": "Иванов",
+      "name": "Алексей",
+      "secname": "Сергеевич",
+      "address": "г. Москва, Ленинский пр-т, д. 45, кв. 12",
+      "phone": "+7 (495) 123-45-67"
     },
     {
       "code": 2,
-      "surname": "Бернар",
-      "name": "Пьер",
-      "secname": "Жанович",
-      "address": "г. Ростов-на-Дону, наб. Донская, д. 40",
-      "phone": "+7 (863) 702-22-22"
+      "surname": "Петрова",
+      "name": "Екатерина",
+      "secname": "Андреевна",
+      "address": "г. Санкт-Петербург, Невский пр-т, д. 88, кв. 7",
+      "phone": "+7 (812) 234-56-78"
     },
     {
       "code": 3,
-      "surname": "Конти",
-      "name": "Валерия",
-      "secname": "Маркоевна",
-      "address": "г. Волгоград, ул. Европейская, д. 6",
-      "phone": "+7 (844) 703-33-33"
+      "surname": "Смирнов",
+      "name": "Дмитрий",
+      "secname": "Викторович",
+      "address": "г. Казань, ул. Баумана, д. 12, кв. 34",
+      "phone": "+7 (843) 345-67-89"
     },
     {
       "code": 4,
-      "surname": "Шмидт",
+      "surname": "Кузнецова",
       "name": "Ольга",
-      "secname": "Гансовна",
-      "address": "г. Калининград, ул. Янтарная, д. 11",
-      "phone": "+7 (401) 704-44-44"
+      "secname": "Михайловна",
+      "address": "г. Новосибирск, Красный пр-т, д. 23, кв. 56",
+      "phone": "+7 (383) 456-78-90"
     },
     {
       "code": 5,
-      "surname": "Росси",
-      "name": "Марко",
-      "secname": "Алессандрович",
-      "address": "г. Краснодар, ул. Морская, д. 19",
-      "phone": "+7 (861) 705-55-55"
+      "surname": "Соколов",
+      "name": "Михаил",
+      "secname": "Павлович",
+      "address": "г. Екатеринбург, ул. Малышева, д. 67, кв. 8",
+      "phone": "+7 (343) 567-89-01"
     }
   ],
   "routes": [
     {
       "code": 1,
-      "name": "Испания, Коста-Брава (JSON)",
+      "name": "Турция, Анталия",
       "climate": "Средиземноморский",
-      "duration": 8,
-      "hotel": "Hotel JSON Sol 4*",
-      "cost": 88000
+      "duration": 10,
+      "hotel": "Rixos Premium Belek 5*",
+      "cost": 95000
     },
     {
       "code": 2,
+      "name": "ОАЭ, Дубай",
+      "climate": "Тропический пустынный",
+      "duration": 7,
+      "hotel": "Atlantis The Palm 5*",
+      "cost": 145000
+    },
+    {
+      "code": 3,
       "name": "Италия, Рим и Флоренция",
       "climate": "Умеренный",
       "duration": 9,
-      "hotel": "Boutique JSON Arte 4*",
-      "cost": 102000
-    },
-    {
-      "code": 3,
-      "name": "Франция, Ницца",
-      "climate": "Средиземноморский",
-      "duration": 6,
-      "hotel": "Promenade JSON 5*",
-      "cost": 115000
+      "hotel": "Hotel Artemide 4*",
+      "cost": 110000
     },
     {
       "code": 4,
-      "name": "Кипр, Лимассол",
-      "climate": "Сухой тёплый",
-      "duration": 7,
-      "hotel": "Resort JSON Bay 5*",
-      "cost": 72000
-    },
-    {
-      "code": 5,
-      "name": "Мальдивы, атолл JSON",
+      "name": "Таиланд, Пхукет",
       "climate": "Тропический",
-      "duration": 10,
-      "hotel": "Water Villa JSON 5*",
-      "cost": 210000
-    }
-  ],
-  "travels": [
-    {
-      "code": 1,
-      "date": "10.04.2026",
-      "quantity": 2,
-      "discount": 6,
-      "clients": [
-        1,
-        2
-      ],
-      "routes": [
-        1
-      ],
-      "airline_code": 1,
-      "touroperator_code": 1
+      "duration": 12,
+      "hotel": "Katathani Phuket Beach Resort 5*",
+      "cost": 130000
     },
     {
       "code": 5,
-      "date": "22.06.2026",
-      "quantity": 2,
-      "discount": 14,
-      "clients": [
-        2,
-        4
-      ],
-      "routes": [
-        3,
-        4,
-        5
-      ],
-      "airline_code": 3,
-      "touroperator_code": 3
-    },
-    {
-      "code": 4,
-      "date": "07.06.2026",
-      "quantity": 4,
-      "discount": 11,
-      "clients": [
-        1,
-        3,
-        5
-      ],
-      "routes": [
-        1,
-        5
-      ],
-      "airline_code": 3,
-      "touroperator_code": 5
-    },
-    {
-      "code": 3,
-      "date": "25.05.2026",
-      "quantity": 1,
-      "discount": 0,
-      "clients": [
-        4,
-        5
-      ],
-      "routes": [
-        4
-      ],
-      "airline_code": 2,
-      "touroperator_code": 5
-    },
-    {
-      "code": 2,
-      "date": "18.05.2026",
-      "quantity": 3,
-      "discount": 9,
-      "clients": [
-        3
-      ],
-      "routes": [
-        2,
-        3
-      ],
-      "airline_code": 2,
-      "touroperator_code": 5
+      "name": "Греция, Крит",
+      "climate": "Средиземноморский",
+      "duration": 8,
+      "hotel": "Creta Maris Beach Resort 5*",
+      "cost": 88000
     }
   ],
   "airlines": [
     {
       "code": 1,
-      "name": "Iberia JSON-demo",
-      "flight_cost": 35000
+      "name": "Аэрофлот",
+      "flight_cost": 32000
     },
     {
       "code": 2,
-      "name": "Alitalia JSON-сегмент",
-      "flight_cost": 41000
-    },
-    {
-      "code": 3,
-      "name": "Air France JSON",
+      "name": "Turkish Airlines",
       "flight_cost": 38000
     },
     {
-      "code": 4,
-      "name": "Cyprus Airways JSON",
-      "flight_cost": 29000
+      "code": 3,
+      "name": "Emirates",
+      "flight_cost": 65000
     },
     {
-      "code": 5,
-      "name": "Emirates JSON-острова",
-      "flight_cost": 95000
+      "code": 4,
+      "name": "Pegasus Airlines",
+      "flight_cost": 28000
     }
   ],
   "touroperators": [
     {
       "code": 1,
-      "name": "«JSON-Европа Трэвел»",
-      "address": "Самара, шоу-рум JSON, ул. Волжская, 10",
-      "phone": "+7 (846) 900-JSON-1",
-      "website": "https://json-europe-demo.example"
+      "name": "Coral Travel",
+      "address": "г. Москва, ул. Тверская, д. 18, стр. 1",
+      "phone": "+7 (495) 786-90-00",
+      "website": "https://www.coral.ru"
     },
     {
       "code": 2,
-      "name": "«Рим JSON»",
-      "address": "Ростов-на-Дону, офис JSON, ул. Итальянская, 4",
-      "phone": "+7 (863) 900-JSON-2",
-      "website": "https://json-rome-demo.example"
+      "name": "TUI Russia",
+      "address": "г. Москва, Олимпийский пр-т, д. 14",
+      "phone": "+7 (495) 933-44-55",
+      "website": "https://www.tui.ru"
     },
     {
       "code": 3,
-      "name": "«Ницца JSON»",
-      "address": "Волгоград, бюро JSON, пл. Франции, 2",
-      "phone": "+7 (844) 900-JSON-3",
-      "website": "https://json-nice-demo.example"
+      "name": "Anex Tour",
+      "address": "г. Москва, Походный пр-д, д. 4",
+      "phone": "+7 (495) 720-50-50",
+      "website": "https://www.anextour.com"
     },
     {
       "code": 4,
-      "name": "«Кипр JSON»",
-      "address": "Калининград, стойка JSON, ул. Солнечная, 8",
-      "phone": "+7 (401) 900-JSON-4",
-      "website": "https://json-cyprus-demo.example"
+      "name": "Pegas Touristik",
+      "address": "г. Москва, ул. Намёткина, д. 14, корп. 1",
+      "phone": "+7 (495) 933-77-77",
+      "website": "https://pegast.ru"
+    }
+  ],
+  "managers": [
+    {
+      "code": 1,
+      "surname": "Морозова",
+      "name": "Анна",
+      "secname": "Игоревна",
+      "position": "Старший менеджер по продажам",
+      "phone": "+7 (495) 100-10-01",
+      "email": "morozova@travel.ru"
+    },
+    {
+      "code": 2,
+      "surname": "Волков",
+      "name": "Артём",
+      "secname": "Олегович",
+      "position": "Менеджер по работе с клиентами",
+      "phone": "+7 (495) 100-10-02",
+      "email": "volkov@travel.ru"
+    },
+    {
+      "code": 3,
+      "surname": "Лебедева",
+      "name": "Мария",
+      "secname": "Дмитриевна",
+      "position": "Менеджер направления",
+      "phone": "+7 (495) 100-10-03",
+      "email": "lebedeva@travel.ru"
+    }
+  ],
+  "travels": [
+    {
+      "code": 1,
+      "date": "15.05.2026",
+      "quantity": 2,
+      "discount": 5,
+      "clients": [1, 2],
+      "routes": [1],
+      "airline_code": 2,
+      "touroperator_code": 1,
+      "manager_code": 1
+    },
+    {
+      "code": 2,
+      "date": "03.06.2026",
+      "quantity": 1,
+      "discount": 0,
+      "clients": [3],
+      "routes": [2],
+      "airline_code": 3,
+      "touroperator_code": 2,
+      "manager_code": 2
+    },
+    {
+      "code": 3,
+      "date": "20.06.2026",
+      "quantity": 4,
+      "discount": 12,
+      "clients": [1, 4, 5],
+      "routes": [3],
+      "airline_code": 1,
+      "touroperator_code": 2,
+      "manager_code": 1
+    },
+    {
+      "code": 4,
+      "date": "10.07.2026",
+      "quantity": 2,
+      "discount": 8,
+      "clients": [2, 5],
+      "routes": [4],
+      "airline_code": 3,
+      "touroperator_code": 3,
+      "manager_code": 3
     },
     {
       "code": 5,
-      "name": "«Мальдивы JSON»",
-      "address": "Краснодар, павильон JSON, ул. Океанская, 1",
-      "phone": "+7 (861) 900-JSON-5",
-      "website": "https://json-maldives-demo.example"
+      "date": "05.08.2026",
+      "quantity": 3,
+      "discount": 10,
+      "clients": [3, 4],
+      "routes": [5, 1],
+      "airline_code": 4,
+      "touroperator_code": 4,
+      "manager_code": 2
+    }
+  ],
+  "payments": [
+    {
+      "code": 1,
+      "package_code": 1,
+      "date": "10.04.2026",
+      "amount": 180500,
+      "method": "карта",
+      "status": "оплачен"
+    },
+    {
+      "code": 2,
+      "package_code": 2,
+      "date": "12.04.2026",
+      "amount": 210000,
+      "method": "перевод",
+      "status": "оплачен"
+    },
+    {
+      "code": 3,
+      "package_code": 3,
+      "date": "15.04.2026",
+      "amount": 387200,
+      "method": "карта",
+      "status": "в ожидании"
+    },
+    {
+      "code": 4,
+      "package_code": 4,
+      "date": "18.04.2026",
+      "amount": 239200,
+      "method": "наличные",
+      "status": "отменён"
     }
   ]
 }

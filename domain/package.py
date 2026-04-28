@@ -1,6 +1,15 @@
+"""Путёвка — основная транзакционная сущность фирмы.
+
+Путёвка связана с клиентами и маршрутами по принципу «многие ко многим»:
+одна путёвка может включать нескольких клиентов и несколько маршрутов
+(например, многодневный комбинированный тур по двум странам).
+"""
+
 from domain.entity import entity
 
+
 class package(entity):
+    """Купленная клиентом путёвка: дата, количество, скидка, клиенты, маршруты."""
 
     def __init__(self, code=0, date='', quantity=0, discount=0):
         super().__init__(code)
@@ -10,6 +19,7 @@ class package(entity):
         self.__clients = []
         self.__routes = []
 
+    # --- скалярные атрибуты ---
     def setDate(self, value):
         self.__date = value
 
@@ -28,50 +38,61 @@ class package(entity):
     def getDiscount(self):
         return self.__discount
 
+    # --- клиенты ---
     def appendClient(self, value):
-        if isinstance(value, int):
-            if hasattr(self, '_library') and self._library:
-                client_obj = self._library.getClient(value)
-                if client_obj and client_obj not in self.__clients:
-                    self.__clients.append(client_obj)
-            else:
-                print(f'Warning: package.appendClient({value}) - нет доступа к library')
-        elif hasattr(value, 'getCode') and value not in self.__clients:
-            if value not in self.__clients:
-                self.__clients.append(value)
+        """Добавляет клиента: можно передать объект или код.
+
+        При передаче кода требуется, чтобы у путёвки был установлен атрибут
+        ``_library`` со ссылкой на ``TravelCompany`` — он используется для
+        разрешения кода в объект клиента.
+        """
+        client_obj = self._resolve(value, 'getClient')
+        if client_obj is not None and client_obj not in self.__clients:
+            self.__clients.append(client_obj)
 
     def removeClient(self, value):
         if isinstance(value, int):
             for cl in self.__clients[:]:
                 if cl.getCode() == value:
                     self.__clients.remove(cl)
-                    break
+                    return
         elif value in self.__clients:
             self.__clients.remove(value)
 
     def getClientCodes(self):
         return [c.getCode() for c in self.__clients]
 
+    # --- маршруты ---
     def appendRoute(self, value):
-        if isinstance(value, int):
-            if hasattr(self, '_library') and self._library:
-                route_obj = self._library.getRoute(value)
-                if route_obj and route_obj not in self.__routes:
-                    self.__routes.append(route_obj)
-            else:
-                print(f'Warning: package.appendRoute({value}) - нет доступа к library')
-        elif hasattr(value, 'getCode') and value not in self.__routes:
-            if value not in self.__routes:
-                self.__routes.append(value)
+        """Добавляет маршрут (объект или код); см. ``appendClient``."""
+        route_obj = self._resolve(value, 'getRoute')
+        if route_obj is not None and route_obj not in self.__routes:
+            self.__routes.append(route_obj)
 
     def removeRoute(self, value):
         if isinstance(value, int):
             for rt in self.__routes[:]:
                 if rt.getCode() == value:
                     self.__routes.remove(rt)
-                    break
+                    return
         elif value in self.__routes:
             self.__routes.remove(value)
 
     def getRouteCodes(self):
         return [r.getCode() for r in self.__routes]
+
+    # --- helpers ---
+    def _resolve(self, value, library_method):
+        """Возвращает объект сущности по коду или сам объект, если он передан.
+
+        ``library_method`` — имя метода у ``self._library`` для поиска по коду
+        (``'getClient'`` или ``'getRoute'``).
+        """
+        if isinstance(value, int):
+            lib = getattr(self, '_library', None)
+            if lib is None:
+                return None
+            return getattr(lib, library_method)(value)
+        if hasattr(value, 'getCode'):
+            return value
+        return None

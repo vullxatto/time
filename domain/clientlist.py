@@ -1,5 +1,8 @@
+"""Коллекция клиентов."""
+
 from domain.entitylist import entityList
 from domain.client import client
+
 
 class clientList(entityList):
 
@@ -10,10 +13,10 @@ class clientList(entityList):
     def createItem(self, code, surname='', name='', secname='', address='', phone=''):
         if code in self.getCodes():
             print(f'Клиент с кодом {code} уже существует')
-        else:
-            c = client(code, surname, name, secname, address, phone)
-            super().appendItem(c)
-            return c
+            return None
+        c = client(code, surname, name, secname, address, phone)
+        super().appendItem(c)
+        return c
 
     def newItem(self, surname='', name='', secname='', address='', phone=''):
         c = client(self.getNewCode(), surname, name, secname, address, phone)

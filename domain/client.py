@@ -1,6 +1,10 @@
+"""Клиент туристической фирмы."""
+
 from domain.namedentity import namedentity
 
+
 class client(namedentity):
+    """Физическое лицо, покупающее путёвки."""
 
     def __init__(self, code=0, surname='', name='', secname='', address='', phone=''):
         super().__init__(code, name)

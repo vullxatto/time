@@ -1,6 +1,10 @@
-from namedentity import namedentity
+"""Туроператор — компания, организующая туры."""
+
+from domain.namedentity import namedentity
+
 
 class touroperator(namedentity):
+    """Компания-туроператор: адрес, телефон, сайт."""
 
     def __init__(self, code=0, name='', address='', phone='', website=''):
         super().__init__(code, name)

@@ -1,6 +1,10 @@
+"""Базовая коллекция сущностей с операциями поиска и генерации новых кодов."""
+
 from domain.entity import entity
 
+
 class entityList:
+    """Список однородных сущностей; обеспечивает уникальность кодов."""
 
     def __init__(self):
         self.__list = []
@@ -9,16 +13,16 @@ class entityList:
         self.__list = []
 
     def findByCode(self, code):
-        for l in self.__list:
-            if l.getCode() == code:
-                return l
+        """Возвращает сущность с заданным кодом или None."""
+        for item in self.__list:
+            if item.getCode() == code:
+                return item
+        return None
 
     def getNewCode(self):
-        l = self.getCodes()
-        if l:
-            return max(l) + 1
-        else:
-            return 1
+        """Возвращает следующий свободный код (max + 1) или 1, если список пуст."""
+        codes = self.getCodes()
+        return max(codes) + 1 if codes else 1
 
     def getCodes(self):
         return [s.getCode() for s in self.__list]
@@ -33,6 +37,7 @@ class entityList:
         if isinstance(value, entity):
             if value in self.__list:
                 self.__list.remove(value)
-        if isinstance(value, int):
-            if self.findByCode(value):
-                self.__list.remove(self.findByCode(value))
+        elif isinstance(value, int):
+            obj = self.findByCode(value)
+            if obj is not None:
+                self.__list.remove(obj)

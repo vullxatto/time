@@ -1,8 +1,17 @@
+"""Базовая модель туристической фирмы.
+
+Содержит три ключевые сущности предметной области — клиентов, маршруты и
+путёвки — и предоставляет операции CRUD над ними. Расширенные сущности
+(авиаперевозчики, туроператоры, менеджеры, платежи) добавляются в подклассе.
+"""
+
 from domain.clientlist import clientList
 from domain.routelist import routeList
 from domain.travellist import travelList
 
+
 class TravelCompany:
+    """Хранит коллекции клиентов, маршрутов и путёвок и предоставляет к ним доступ."""
 
     def __init__(self):
         self.__clientList = clientList()
@@ -15,6 +24,7 @@ class TravelCompany:
         self.__routeList.clear()
         self.__travelList.clear()
 
+    # --- клиенты ---
     def createClient(self, code, surname='', name='', secname='', address='', phone=''):
         return self.__clientList.createItem(code, surname, name, secname, address, phone)
 
@@ -38,6 +48,7 @@ class TravelCompany:
     def getClientNewCode(self):
         return self.__clientList.getNewCode()
 
+    # --- маршруты ---
     def createRoute(self, code, name='', climate='', duration=0, hotel='', cost=0):
         return self.__routeList.createItem(code, name, climate, duration, hotel, cost)
 
@@ -61,6 +72,7 @@ class TravelCompany:
     def getRouteNewCode(self):
         return self.__routeList.getNewCode()
 
+    # --- путёвки ---
     def createTravel(self, code, date='', quantity=0, discount=0):
         travel = self.__travelList.createItem(code, date, quantity, discount)
         if travel:
