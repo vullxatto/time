@@ -1,47 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3fbf79f-0923-4ca0-8597-31d19706d061" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/demo.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/demo.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataaccess/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/datajson.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/datajson_ext.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/datasql.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/datasql_ext.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/dataxml.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataaccess/dataxml_ext.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/TravelCompany.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/airline.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/airline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/airlinelist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/clientlist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/entitylist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/managerlist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/namedentity.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/package.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/package.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/package_ext.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/package_ext.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/payment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/paymentlist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/route.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/route.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/routelist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/touroperator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/touroperatorlist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/travelcompany_ext.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/travellist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/travellist_ext.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/start.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/airlinepage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/clientpage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/layout.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/layout.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/managerpage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/paymentpage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/routepage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/touroperatorpage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/travelpage.py" beforeDir="false" />
-    </list>
+    <list default="true" id="e3fbf79f-0923-4ca0-8597-31d19706d061" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
