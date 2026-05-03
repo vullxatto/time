@@ -1,17 +1,17 @@
 """Авиаперевозчик — авиакомпания, выполняющая перелёт по путёвке."""
 
-from domain.namedentity import namedentity
+from domain.named_entity import NamedEntity
 
 
-class airline(namedentity):
+class Airline(NamedEntity):
     """Авиакомпания со стоимостью авиаперелёта."""
 
     def __init__(self, code=0, name='', flight_cost=0):
         super().__init__(code, name)
-        self.setFlightCost(flight_cost)
+        self.set_flight_cost(flight_cost)
 
-    def setFlightCost(self, value):
+    def set_flight_cost(self, value):
         self.__flight_cost = value
 
-    def getFlightCost(self):
+    def get_flight_cost(self):
         return self.__flight_cost

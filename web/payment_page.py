@@ -5,32 +5,32 @@
 при переходе со страницы путёвок.
 """
 
-from web.layout import page, esc, back_link, status_badge
+from web.layout import (
+    page, esc, back_link, status_badge, crud_ok, crud_err, crud_row_actions,
+)
 from domain.payment import PAYMENT_METHODS, PAYMENT_STATUSES
 
 
-class paymentpage:
+class PaymentPage:
 
     def __init__(self, library):
         self.__lib = library
 
     def index(self):
         rows = []
-        for i, p in enumerate(self.__lib.getPaymentList(), 1):
-            travel = self.__lib.getTravel(p.getPackageCode())
-            travel_str = (f'№{p.getPackageCode()} от {esc(travel.getDate())}'
-                          if travel else f'<span class="muted">№{p.getPackageCode()} (нет)</span>')
+        for i, p in enumerate(self.__lib.get_payment_list(), 1):
+            travel = self.__lib.get_travel(p.get_package_code())
+            travel_str = (f'№{p.get_package_code()} от {esc(travel.get_date())}'
+                          if travel else f'<span class="muted">№{p.get_package_code()} (нет)</span>')
             rows.append(
-                f'<tr><td>{i}</td><td>{p.getCode()}</td>'
+                f'<tr><td>{i}</td><td>{p.get_code()}</td>'
                 f'<td>{travel_str}</td>'
-                f'<td>{esc(p.getDate())}</td>'
-                f'<td>{p.getAmount():,} ₽</td>'
-                f'<td>{esc(p.getMethod())}</td>'
-                f'<td>{status_badge(p.getStatus())}</td>'
-                f'<td><a href="editform?code={p.getCode()}">изменить</a> · '
-                f'<a href="delr?code={p.getCode()}" '
-                f'onclick="return confirm(\'Удалить платёж?\')">удалить</a></td>'
-                f'</tr>')
+                f'<td>{esc(p.get_date())}</td>'
+                f'<td>{p.get_amount():,} ₽</td>'
+                f'<td>{esc(p.get_method())}</td>'
+                f'<td>{status_badge(p.get_status())}</td>'
+                + crud_row_actions(p.get_code(), 'Удалить платёж?')
+                + '</tr>')
         body = (
             '<p><a href="addform">+ Добавить платёж</a></p>'
             '<table><tr><th>№</th><th>Код</th><th>Путёвка</th>'
@@ -52,28 +52,27 @@ class paymentpage:
             pkg = int(package_code or 0)
             if pkg <= 0:
                 raise ValueError('Не указана путёвка')
-            if self.__lib.getTravel(pkg) is None:
+            if self.__lib.get_travel(pkg) is None:
                 raise ValueError(f'Путёвка №{pkg} не существует')
-            if self.__lib.getPaymentByPackage(pkg) is not None:
+            if self.__lib.get_payment_by_package(pkg) is not None:
                 raise ValueError(f'У путёвки №{pkg} уже есть платёж (связь 1:1)')
-            code = self.__lib.getPaymentNewCode()
-            self.__lib.createPayment(code, pkg, date.strip(), int(amount or 0),
+            code = self.__lib.get_payment_new_code()
+            self.__lib.create_payment(code, pkg, date.strip(), int(amount or 0),
                                      method.strip(), status.strip())
-            return page('Готово',
-                        f'<p>Платёж №{code} добавлен.</p>' + back_link())
+            return crud_ok(f'<p>Платёж №{code} добавлен.</p>')
         except Exception as e:
-            return page('Ошибка', f'<p>{esc(e)}</p>' + back_link('addform'))
+            return crud_err(e, 'addform')
     addaction.exposed = True
 
     def editform(self, code=0):
         try:
-            p = self.__lib.getPayment(int(code))
+            p = self.__lib.get_payment(int(code))
             if p is None:
                 raise ValueError('не найден')
             return page(f'Изменить платёж №{code}',
                         self._form('editaction', obj=p, hidden_code=int(code)))
         except Exception as e:
-            return page('Ошибка', f'<p>{esc(e)}</p>' + back_link())
+            return crud_err(e)
     editform.exposed = True
 
     def editaction(self, code=0, package_code=0, date='', amount=0,
@@ -81,47 +80,47 @@ class paymentpage:
         try:
             code = int(code)
             pkg = int(package_code or 0)
-            self.__lib.removePayment(code)
-            self.__lib.createPayment(code, pkg, date.strip(), int(amount or 0),
+            self.__lib.remove_payment(code)
+            self.__lib.create_payment(code, pkg, date.strip(), int(amount or 0),
                                      method.strip(), status.strip())
-            return page('Готово',
-                        f'<p>Платёж №{code} обновлён.</p>' + back_link())
+            return crud_ok(f'<p>Платёж №{code} обновлён.</p>')
         except Exception as e:
-            return page('Ошибка', f'<p>{esc(e)}</p>' + back_link())
+            return crud_err(e)
     editaction.exposed = True
 
     def delr(self, code=0):
         try:
-            self.__lib.removePayment(int(code))
-            return page('Готово', f'<p>Платёж №{code} удалён.</p>' + back_link())
+            self.__lib.remove_payment(int(code))
+            return crud_ok(f'<p>Платёж №{code} удалён.</p>')
         except Exception as e:
-            return page('Ошибка', f'<p>{esc(e)}</p>' + back_link())
+            return crud_err(e)
     delr.exposed = True
 
     def _form(self, action, obj=None, hidden_code=None, preset_package=0):
         hidden = (f'<input type="hidden" name="code" value="{hidden_code}">'
                   if hidden_code is not None else '')
-        cur_pkg = obj.getPackageCode() if obj else preset_package
-        date = esc(obj.getDate()) if obj else ''
-        amount = obj.getAmount() if obj else 0
-        method = obj.getMethod() if obj else ''
-        status = obj.getStatus() if obj else 'в ожидании'
+        cur_pkg = obj.get_package_code() if obj else preset_package
+        date = esc(obj.get_date()) if obj else ''
+        amount = obj.get_amount() if obj else 0
+        method = obj.get_method() if obj else ''
+        status = obj.get_status() if obj else 'в ожидании'
 
         # выпадающий список путёвок: только те, что без платежа,
         # плюс текущая (при редактировании) для возможности её сохранить
         free_pkgs = []
-        for t in self.__lib.getTravelList():
-            existing = self.__lib.getPaymentByPackage(t.getCode())
-            if existing is None or t.getCode() == cur_pkg:
+        for t in self.__lib.get_travel_list():
+            existing = self.__lib.get_payment_by_package(t.get_code())
+            if existing is None or t.get_code() == cur_pkg:
                 free_pkgs.append(t)
 
         pkg_opts = '<option value="0">— выберите путёвку —</option>'
         for t in free_pkgs:
-            sel = ' selected' if t.getCode() == cur_pkg else ''
-            client_count = len(t.getClientCodes())
-            pkg_opts += (f'<option value="{t.getCode()}"{sel}>'
-                         f'№{t.getCode()} от {esc(t.getDate())} '
-                         f'({client_count} чел., {t.getQuantity()} шт.)</option>')
+            sel = ' selected' if t.get_code() == cur_pkg else ''
+            client_count = len(t.get_client_codes())
+            qty_hint = f'{client_count} чел.' if client_count else 'нет клиентов'
+            pkg_opts += (f'<option value="{t.get_code()}"{sel}>'
+                         f'№{t.get_code()} от {esc(t.get_date())} '
+                         f'({qty_hint})</option>')
 
         method_opts = ''.join(
             f'<option value="{esc(m)}"{ " selected" if m == method else "" }>{esc(m)}</option>'

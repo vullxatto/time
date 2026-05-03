@@ -1,31 +1,31 @@
 """Туроператор — компания, организующая туры."""
 
-from domain.namedentity import namedentity
+from domain.named_entity import NamedEntity
 
 
-class touroperator(namedentity):
+class TourOperator(NamedEntity):
     """Компания-туроператор: адрес, телефон, сайт."""
 
     def __init__(self, code=0, name='', address='', phone='', website=''):
         super().__init__(code, name)
-        self.setAddress(address)
-        self.setPhone(phone)
-        self.setWebsite(website)
+        self.set_address(address)
+        self.set_phone(phone)
+        self.set_website(website)
 
-    def setAddress(self, value):
+    def set_address(self, value):
         self.__address = value
 
-    def setPhone(self, value):
+    def set_phone(self, value):
         self.__phone = value
 
-    def setWebsite(self, value):
+    def set_website(self, value):
         self.__website = value
 
-    def getAddress(self):
+    def get_address(self):
         return self.__address
 
-    def getPhone(self):
+    def get_phone(self):
         return self.__phone
 
-    def getWebsite(self):
+    def get_website(self):
         return self.__website

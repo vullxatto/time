@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Пример данных для XML (набор отличается от demo.json и demo.sqlite). -->
+<travelcompany>
+  <clients>
+    <client code="1" surname="Орлова" name="Наталья" secname="Фёдоровна" address="г. Воронеж, ул. Революции, д. 31, кв. 9" phone="+7 (473) 111-22-33"/>
+    <client code="2" surname="Жуков" name="Роман" secname="Ильич" address="г. Владивосток, Океанский пр-т, д. 105, кв. 44" phone="+7 (423) 222-33-44"/>
+    <client code="3" surname="Мельникова" name="Светлана" secname="Тарасовна" address="г. Красноярск, ул. Ленина, д. 55, кв. 12" phone="+7 (391) 333-44-55"/>
+    <client code="4" surname="Фёдоров" name="Кирилл" secname="Андреевич" address="г. Хабаровск, ул. Муравьёва-Амурского, д. 18, кв. 6" phone="+7 (421) 444-55-66"/>
+  </clients>
+  <routes>
+    <route code="1" name="Вьетнам, Нячанг" climate="Муссонный тропический" duration="11" hotel="Vinpearl Resort Nha Trang 5*" cost="87000"/>
+    <route code="2" name="Япония, Токио и Киото" climate="Умеренный влажный" duration="10" hotel="Hotel Granvia Kyoto 4*" cost="195000"/>
+    <route code="3" name="Египет, Шарм-эль-Шейх" climate="Пустынный жаркий" duration="8" hotel="Rixos Premium Seagate 5*" cost="72000"/>
+    <route code="4" name="Испания, Барселона" climate="Средиземноморский" duration="6" hotel="Hotel Jazz 3*" cost="98000"/>
+  </routes>
+  <travels>
+    <travel code="1" date="22.09.2026" quantity="2" discount="7" airline_code="1" touroperator_code="1" manager_code="1">
+      <clients>
+        <client code="1"/>
+        <client code="2"/>
+      </clients>
+      <routes>
+        <route code="1"/>
+      </routes>
+    </travel>
+    <travel code="2" date="01.10.2026" quantity="1" discount="0" airline_code="2" touroperator_code="2" manager_code="2">
+      <clients>
+        <client code="3"/>
+      </clients>
+      <routes>
+        <route code="2"/>
+      </routes>
+    </travel>
+    <travel code="3" date="14.11.2026" quantity="3" discount="15" airline_code="3" touroperator_code="3" manager_code="1">
+      <clients>
+        <client code="2"/>
+        <client code="4"/>
+      </clients>
+      <routes>
+        <route code="3"/>
+        <route code="4"/>
+      </routes>
+    </travel>
+  </travels>
+  <airlines>
+    <airline code="1" name="S7 Airlines" flight_cost="24500"/>
+    <airline code="2" name="Qatar Airways" flight_cost="52000"/>
+    <airline code="3" name="Lufthansa" flight_cost="41000"/>
+  </airlines>
+  <touroperators>
+    <touroperator code="1" name="Intourist" address="г. Москва, ул. Рождественка, д. 7" phone="+7 (495) 755-99-00" website="https://www.intourist.ru"/>
+    <touroperator code="2" name="Biblio-Globus" address="г. Москва, ул. Лаврушинский пер., д. 10" phone="+7 (495) 785-99-00" website="https://www.bgoperator.ru"/>
+    <touroperator code="3" name="PAC Group" address="г. Санкт-Петербург, наб. реки Фонтанки, д. 55" phone="+7 (812) 309-88-88" website="https://www.pac.ru"/>
+  </touroperators>
+  <managers>
+    <manager code="1" surname="Крылова" name="Ирина" secname="Сергеевна" position="Руководитель отдела премиум" phone="+7 (495) 200-01-10" email="krylova@demo-xml.ru"/>
+    <manager code="2" surname="Нестеров" name="Павел" secname="Юрьевич" position="Менеджер корпоративных туров" phone="+7 (495) 200-01-11" email="nesterov@demo-xml.ru"/>
+  </managers>
+  <payments>
+    <payment code="1" package_code="1" date="05.08.2026" amount="142300" method="перевод" status="оплачен"/>
+    <payment code="2" package_code="2" date="07.08.2026" amount="248000" method="карта" status="в ожидании"/>
+  </payments>
+</travelcompany>

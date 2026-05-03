@@ -1,6 +1,6 @@
 """Точка входа веб-приложения на CherryPy.
 
-Использует расширенную модель TravelCompany_ext (7 сущностей) и
+Использует расширенную модель TravelCompanyExt (7 сущностей) и
 расширенные сериализаторы JSON/XML/SQL.
 """
 
@@ -12,18 +12,18 @@ root_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(root_dir)
 sys.path.insert(0, root_dir)
 
-from domain.travelcompany_ext import TravelCompany_ext
-from dataaccess.datajson_ext import datajson_ext
-from dataaccess.dataxml_ext import dataxml_ext
-from dataaccess.datasql_ext import datasql_ext
+from domain.travel_company_ext import TravelCompanyExt
+from dataaccess.data_json_ext import DataJsonExt
+from dataaccess.data_xml_ext import DataXmlExt
+from dataaccess.data_sql_ext import DataSqlExt
 from web.layout import page, esc, back_link
-from web.clientpage import clientpage
-from web.routepage import routepage
-from web.travelpage import travelpage
-from web.airlinepage import airlinepage
-from web.touroperatorpage import touroperatorpage
-from web.managerpage import managerpage
-from web.paymentpage import paymentpage
+from web.client_page import ClientPage
+from web.route_page import RoutePage
+from web.travel_page import TravelPage
+from web.airline_page import AirlinePage
+from web.tour_operator_page import TourOperatorPage
+from web.manager_page import ManagerPage
+from web.payment_page import PaymentPage
 
 
 def _detect_format(fname, dformat):
@@ -45,22 +45,22 @@ class Root:
     """Корневая страница: открытие/сохранение файлов и переход к редакторам."""
 
     def __init__(self):
-        self.__lib = TravelCompany_ext()
+        self.__lib = TravelCompanyExt()
         self.__loaded = False
         self.__fname = ''
         self.__fmt = ''
         # сериализаторы переиспользуем
-        self.__djson = datajson_ext(self.__lib)
-        self.__dxml = dataxml_ext(self.__lib)
-        self.__dsql = datasql_ext(self.__lib)
-        # дочерние страницы
-        self.clientpage = clientpage(self.__lib)
-        self.routepage = routepage(self.__lib)
-        self.travelpage = travelpage(self.__lib)
-        self.airlinepage = airlinepage(self.__lib)
-        self.touroperatorpage = touroperatorpage(self.__lib)
-        self.managerpage = managerpage(self.__lib)
-        self.paymentpage = paymentpage(self.__lib)
+        self.__djson = DataJsonExt(self.__lib)
+        self.__dxml = DataXmlExt(self.__lib)
+        self.__dsql = DataSqlExt(self.__lib)
+        # дочерние страницы (имена атрибутов = URL CherryPy: /clientpage/, …)
+        self.clientpage = ClientPage(self.__lib)
+        self.routepage = RoutePage(self.__lib)
+        self.travelpage = TravelPage(self.__lib)
+        self.airlinepage = AirlinePage(self.__lib)
+        self.touroperatorpage = TourOperatorPage(self.__lib)
+        self.managerpage = ManagerPage(self.__lib)
+        self.paymentpage = PaymentPage(self.__lib)
 
     def index(self):
         if not self.__loaded:
@@ -71,13 +71,13 @@ class Root:
         summary = (
             f'<table>'
             f'<tr><th>Сущность</th><th>Записей</th></tr>'
-            f'<tr><td><a href="/clientpage/">Клиенты</a></td><td>{len(l.getClientList())}</td></tr>'
-            f'<tr><td><a href="/routepage/">Маршруты</a></td><td>{len(l.getRouteList())}</td></tr>'
-            f'<tr><td><a href="/travelpage/">Путёвки</a></td><td>{len(l.getTravelList())}</td></tr>'
-            f'<tr><td><a href="/airlinepage/">Авиаперевозчики</a></td><td>{len(l.getAirlineList())}</td></tr>'
-            f'<tr><td><a href="/touroperatorpage/">Туроператоры</a></td><td>{len(l.getTourOperatorList())}</td></tr>'
-            f'<tr><td><a href="/managerpage/">Менеджеры</a></td><td>{len(l.getManagerList())}</td></tr>'
-            f'<tr><td><a href="/paymentpage/">Платежи</a></td><td>{len(l.getPaymentList())}</td></tr>'
+            f'<tr><td><a href="/clientpage/">Клиенты</a></td><td>{len(l.get_client_list())}</td></tr>'
+            f'<tr><td><a href="/routepage/">Маршруты</a></td><td>{len(l.get_route_list())}</td></tr>'
+            f'<tr><td><a href="/travelpage/">Путёвки</a></td><td>{len(l.get_travel_list())}</td></tr>'
+            f'<tr><td><a href="/airlinepage/">Авиаперевозчики</a></td><td>{len(l.get_airline_list())}</td></tr>'
+            f'<tr><td><a href="/touroperatorpage/">Туроператоры</a></td><td>{len(l.get_tour_operator_list())}</td></tr>'
+            f'<tr><td><a href="/managerpage/">Менеджеры</a></td><td>{len(l.get_manager_list())}</td></tr>'
+            f'<tr><td><a href="/paymentpage/">Платежи</a></td><td>{len(l.get_payment_list())}</td></tr>'
             f'</table>'
         )
         body = (
@@ -101,7 +101,7 @@ class Root:
             obj = self._serializer_for(fmt)
             if obj is None:
                 raise ValueError(f'Неизвестный формат: {fmt!r}')
-            obj.setInp(fname)
+            obj.set_inp(fname)
             obj.read()
             self.__loaded = True
             self.__fname = fname
@@ -123,7 +123,7 @@ class Root:
                 raise ValueError(f'Неизвестный формат: {fmt!r}')
             if fmt == 'SQL' and os.path.isfile(fname):
                 os.remove(fname)
-            obj.setOut(fname)
+            obj.set_out(fname)
             obj.write()
             return page('Готово',
                         f'<p>Сохранено в <code>{esc(fname)}</code> '

@@ -1,43 +1,43 @@
 """Базовый класс доступа к данным: входной/выходной файл, библиотека."""
 
 
-class data:
+class Data:
 
     def __init__(self, lib=None, inp='', out=''):
-        self.setLib(lib)
-        self.setInp(inp)
-        self.setOut(out)
+        self.set_lib(lib)
+        self.set_inp(inp)
+        self.set_out(out)
 
-    def setLib(self, value):
+    def set_lib(self, value):
         self.__lib = value
 
-    def setInp(self, value):
+    def set_inp(self, value):
         self.__inp = value
 
-    def setOut(self, value):
+    def set_out(self, value):
         self.__out = value
 
-    def getLib(self):
+    def get_lib(self):
         return self.__lib
 
-    def getInp(self):
+    def get_inp(self):
         return self.__inp
 
-    def getOut(self):
+    def get_out(self):
         return self.__out
 
-    def readFile(self, lib=None, filename=''):
+    def read_file(self, lib=None, filename=''):
         if lib:
-            self.setLib(lib)
+            self.set_lib(lib)
         if filename:
-            self.setInp(filename)
+            self.set_inp(filename)
         self.read()
 
-    def writeFile(self, lib=None, filename=''):
+    def write_file(self, lib=None, filename=''):
         if lib:
-            self.setLib(lib)
+            self.set_lib(lib)
         if filename:
-            self.setOut(filename)
+            self.set_out(filename)
         self.write()
 
     def read(self):

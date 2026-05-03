@@ -1,41 +1,51 @@
 """Клиент туристической фирмы."""
 
-from domain.namedentity import namedentity
+from domain.entity import Entity
 
 
-class client(namedentity):
-    """Физическое лицо, покупающее путёвки."""
+class Client(Entity):
+    """Физическое лицо, покупающее путёвки (ФИО и контакты хранятся раздельно)."""
 
     def __init__(self, code=0, surname='', name='', secname='', address='', phone=''):
-        super().__init__(code, name)
-        self.setSurname(surname)
-        self.setSecname(secname)
-        self.setAddress(address)
-        self.setPhone(phone)
+        super().__init__(code)
+        self.set_surname(surname)
+        self.set_name(name)
+        self.set_secname(secname)
+        self.set_address(address)
+        self.set_phone(phone)
 
-    def setSurname(self, value):
+    def set_surname(self, value):
         self.__surname = value
 
-    def setSecname(self, value):
+    def set_name(self, value):
+        self.__name = value
+
+    def set_secname(self, value):
         self.__secname = value
 
-    def setAddress(self, value):
+    def set_address(self, value):
         self.__address = value
 
-    def setPhone(self, value):
+    def set_phone(self, value):
         self.__phone = value
 
-    def getSurname(self):
+    def get_surname(self):
         return self.__surname
 
-    def getSecname(self):
+    def get_name(self):
+        return self.__name
+
+    def get_secname(self):
         return self.__secname
 
-    def getAddress(self):
+    def get_address(self):
         return self.__address
 
-    def getPhone(self):
+    def get_phone(self):
         return self.__phone
 
-    def getClientInfo(self):
-        return f'{self.getSurname()} {self.getName()} {self.getSecname()} {self.getAddress()} {self.getPhone()}'
+    def get_client_info(self):
+        return (
+            f'{self.get_surname()} {self.get_name()} {self.get_secname()} '
+            f'{self.get_address()} {self.get_phone()}'
+        )

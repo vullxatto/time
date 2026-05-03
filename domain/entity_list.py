@@ -1,9 +1,9 @@
 """Базовая коллекция сущностей с операциями поиска и генерации новых кодов."""
 
-from domain.entity import entity
+from domain.entity import Entity
 
 
-class entityList:
+class EntityList:
     """Список однородных сущностей; обеспечивает уникальность кодов."""
 
     def __init__(self):
@@ -12,32 +12,32 @@ class entityList:
     def clear(self):
         self.__list = []
 
-    def findByCode(self, code):
+    def find_by_code(self, code):
         """Возвращает сущность с заданным кодом или None."""
         for item in self.__list:
-            if item.getCode() == code:
+            if item.get_code() == code:
                 return item
         return None
 
-    def getNewCode(self):
+    def get_new_code(self):
         """Возвращает следующий свободный код (max + 1) или 1, если список пуст."""
-        codes = self.getCodes()
+        codes = self.get_codes()
         return max(codes) + 1 if codes else 1
 
-    def getCodes(self):
-        return [s.getCode() for s in self.__list]
+    def get_codes(self):
+        return [s.get_code() for s in self.__list]
 
-    def getItems(self):
+    def get_items(self):
         return self.__list.copy()
 
-    def appendItem(self, value):
+    def append_item(self, value):
         self.__list.append(value)
 
-    def removeItem(self, value):
-        if isinstance(value, entity):
+    def remove_item(self, value):
+        if isinstance(value, Entity):
             if value in self.__list:
                 self.__list.remove(value)
         elif isinstance(value, int):
-            obj = self.findByCode(value)
+            obj = self.find_by_code(value)
             if obj is not None:
                 self.__list.remove(obj)

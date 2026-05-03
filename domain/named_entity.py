@@ -1,17 +1,17 @@
 """Сущность, имеющая текстовое название (например, маршрут или авиаперевозчик)."""
 
-from domain.entity import entity
+from domain.entity import Entity
 
 
-class namedentity(entity):
+class NamedEntity(Entity):
     """Сущность с дополнительным текстовым атрибутом name."""
 
     def __init__(self, code=0, name=''):
         super().__init__(code)
-        self.setName(name)
+        self.set_name(name)
 
-    def setName(self, value):
+    def set_name(self, value):
         self.__name = value
 
-    def getName(self):
+    def get_name(self):
         return self.__name

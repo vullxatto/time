@@ -1,15 +1,15 @@
 """Расширенный XML-сериализатор: добавляет авиа, туроп, менеджеров, платежи."""
 
 import xml.dom.minidom
-from dataaccess.dataxml import dataxml
+from dataaccess.data_xml import DataXml
 
 
-class dataxml_ext(dataxml):
+class DataXmlExt(DataXml):
 
     def read(self):
         super().read()
         # после базового чтения дозаполняем FK путёвок и читаем новые секции
-        dom = xml.dom.minidom.parse(self.getInp())
+        dom = xml.dom.minidom.parse(self.get_inp())
         root = dom.documentElement
         self._patch_travel_fk(root)
         for node in root.childNodes:
@@ -31,15 +31,15 @@ class dataxml_ext(dataxml):
                 continue
             for tr in node.getElementsByTagName('travel'):
                 code = int(tr.getAttribute('code') or 0)
-                t = self.getLib().getTravel(code)
+                t = self.get_lib().get_travel(code)
                 if t is None:
                     continue
-                if hasattr(t, 'setAirlineCode'):
-                    t.setAirlineCode(int(tr.getAttribute('airline_code') or 0))
-                if hasattr(t, 'setTourOperatorCode'):
-                    t.setTourOperatorCode(int(tr.getAttribute('touroperator_code') or 0))
-                if hasattr(t, 'setManagerCode'):
-                    t.setManagerCode(int(tr.getAttribute('manager_code') or 0))
+                if hasattr(t, 'set_airline_code'):
+                    t.set_airline_code(int(tr.getAttribute('airline_code') or 0))
+                if hasattr(t, 'set_tour_operator_code'):
+                    t.set_tour_operator_code(int(tr.getAttribute('touroperator_code') or 0))
+                if hasattr(t, 'set_manager_code'):
+                    t.set_manager_code(int(tr.getAttribute('manager_code') or 0))
 
     def _readAirlines(self, node):
         for a in node.getElementsByTagName('airline'):
@@ -47,7 +47,7 @@ class dataxml_ext(dataxml):
                 fc = int(a.getAttribute('flight_cost') or 0)
             except (TypeError, ValueError):
                 fc = 0
-            self.getLib().createAirline(
+            self.get_lib().create_airline(
                 int(a.getAttribute('code') or 0),
                 a.getAttribute('name') or '',
                 fc,
@@ -55,7 +55,7 @@ class dataxml_ext(dataxml):
 
     def _readTourOperators(self, node):
         for t in node.getElementsByTagName('touroperator'):
-            self.getLib().createTourOperator(
+            self.get_lib().create_tour_operator(
                 int(t.getAttribute('code') or 0),
                 t.getAttribute('name') or '',
                 t.getAttribute('address') or '',
@@ -65,7 +65,7 @@ class dataxml_ext(dataxml):
 
     def _readManagers(self, node):
         for m in node.getElementsByTagName('manager'):
-            self.getLib().createManager(
+            self.get_lib().create_manager(
                 int(m.getAttribute('code') or 0),
                 m.getAttribute('surname') or '',
                 m.getAttribute('name') or '',
@@ -81,7 +81,7 @@ class dataxml_ext(dataxml):
                 amount = int(p.getAttribute('amount') or 0)
             except (TypeError, ValueError):
                 amount = 0
-            self.getLib().createPayment(
+            self.get_lib().create_payment(
                 int(p.getAttribute('code') or 0),
                 int(p.getAttribute('package_code') or 0),
                 p.getAttribute('date') or '',
@@ -95,37 +95,37 @@ class dataxml_ext(dataxml):
         root = dom.createElement('travelcompany')
         dom.appendChild(root)
         # унаследованные секции
-        self._writeClients(dom, root)
-        self._writeRoutes(dom, root)
+        self._write_clients(dom, root)
+        self._write_routes(dom, root)
         self._writeTravelsExt(dom, root)
         # новые секции
         self._writeAirlines(dom, root)
         self._writeTourOperators(dom, root)
         self._writeManagers(dom, root)
         self._writePayments(dom, root)
-        with open(self.getOut(), 'w', encoding='utf-8') as f:
+        with open(self.get_out(), 'w', encoding='utf-8') as f:
             f.write(dom.toprettyxml(indent='  '))
 
     def _writeTravelsExt(self, dom, root):
         travels = dom.createElement('travels')
         root.appendChild(travels)
-        for t in self.getLib().getTravelList():
+        for t in self.get_lib().get_travel_list():
             tr = dom.createElement('travel')
-            tr.setAttribute('code', str(t.getCode()))
-            tr.setAttribute('date', t.getDate() or '')
-            tr.setAttribute('quantity', str(t.getQuantity()))
-            tr.setAttribute('discount', str(t.getDiscount()))
-            tr.setAttribute('airline_code', str(t.getAirlineCode() if hasattr(t, 'getAirlineCode') else 0))
-            tr.setAttribute('touroperator_code', str(t.getTourOperatorCode() if hasattr(t, 'getTourOperatorCode') else 0))
-            tr.setAttribute('manager_code', str(t.getManagerCode() if hasattr(t, 'getManagerCode') else 0))
+            tr.setAttribute('code', str(t.get_code()))
+            tr.setAttribute('date', t.get_date() or '')
+            tr.setAttribute('quantity', str(t.get_quantity()))
+            tr.setAttribute('discount', str(t.get_discount()))
+            tr.setAttribute('airline_code', str(t.get_airline_code() if hasattr(t, 'get_airline_code') else 0))
+            tr.setAttribute('touroperator_code', str(t.get_tour_operator_code() if hasattr(t, 'get_tour_operator_code') else 0))
+            tr.setAttribute('manager_code', str(t.get_manager_code() if hasattr(t, 'get_manager_code') else 0))
             cl_elem = dom.createElement('clients')
-            for code in t.getClientCodes():
+            for code in t.get_client_codes():
                 c = dom.createElement('client')
                 c.setAttribute('code', str(code))
                 cl_elem.appendChild(c)
             tr.appendChild(cl_elem)
             rt_elem = dom.createElement('routes')
-            for code in t.getRouteCodes():
+            for code in t.get_route_codes():
                 r = dom.createElement('route')
                 r.setAttribute('code', str(code))
                 rt_elem.appendChild(r)
@@ -135,48 +135,48 @@ class dataxml_ext(dataxml):
     def _writeAirlines(self, dom, root):
         airlines_el = dom.createElement('airlines')
         root.appendChild(airlines_el)
-        for a in self.getLib().getAirlineList():
+        for a in self.get_lib().get_airline_list():
             al = dom.createElement('airline')
-            al.setAttribute('code', str(a.getCode()))
-            al.setAttribute('name', a.getName() or '')
-            al.setAttribute('flight_cost', str(a.getFlightCost()))
+            al.setAttribute('code', str(a.get_code()))
+            al.setAttribute('name', a.get_name() or '')
+            al.setAttribute('flight_cost', str(a.get_flight_cost()))
             airlines_el.appendChild(al)
 
     def _writeTourOperators(self, dom, root):
         ops_el = dom.createElement('touroperators')
         root.appendChild(ops_el)
-        for op in self.getLib().getTourOperatorList():
+        for op in self.get_lib().get_tour_operator_list():
             te = dom.createElement('touroperator')
-            te.setAttribute('code', str(op.getCode()))
-            te.setAttribute('name', op.getName() or '')
-            te.setAttribute('address', op.getAddress() or '')
-            te.setAttribute('phone', op.getPhone() or '')
-            te.setAttribute('website', op.getWebsite() or '')
+            te.setAttribute('code', str(op.get_code()))
+            te.setAttribute('name', op.get_name() or '')
+            te.setAttribute('address', op.get_address() or '')
+            te.setAttribute('phone', op.get_phone() or '')
+            te.setAttribute('website', op.get_website() or '')
             ops_el.appendChild(te)
 
     def _writeManagers(self, dom, root):
         mgrs_el = dom.createElement('managers')
         root.appendChild(mgrs_el)
-        for m in self.getLib().getManagerList():
+        for m in self.get_lib().get_manager_list():
             me = dom.createElement('manager')
-            me.setAttribute('code', str(m.getCode()))
-            me.setAttribute('surname', m.getSurname() or '')
-            me.setAttribute('name', m.getName() or '')
-            me.setAttribute('secname', m.getSecname() or '')
-            me.setAttribute('position', m.getPosition() or '')
-            me.setAttribute('phone', m.getPhone() or '')
-            me.setAttribute('email', m.getEmail() or '')
+            me.setAttribute('code', str(m.get_code()))
+            me.setAttribute('surname', m.get_surname() or '')
+            me.setAttribute('name', m.get_name() or '')
+            me.setAttribute('secname', m.get_secname() or '')
+            me.setAttribute('position', m.get_position() or '')
+            me.setAttribute('phone', m.get_phone() or '')
+            me.setAttribute('email', m.get_email() or '')
             mgrs_el.appendChild(me)
 
     def _writePayments(self, dom, root):
         pays_el = dom.createElement('payments')
         root.appendChild(pays_el)
-        for p in self.getLib().getPaymentList():
+        for p in self.get_lib().get_payment_list():
             pe = dom.createElement('payment')
-            pe.setAttribute('code', str(p.getCode()))
-            pe.setAttribute('package_code', str(p.getPackageCode()))
-            pe.setAttribute('date', p.getDate() or '')
-            pe.setAttribute('amount', str(p.getAmount()))
-            pe.setAttribute('method', p.getMethod() or '')
-            pe.setAttribute('status', p.getStatus() or '')
+            pe.setAttribute('code', str(p.get_code()))
+            pe.setAttribute('package_code', str(p.get_package_code()))
+            pe.setAttribute('date', p.get_date() or '')
+            pe.setAttribute('amount', str(p.get_amount()))
+            pe.setAttribute('method', p.get_method() or '')
+            pe.setAttribute('status', p.get_status() or '')
             pays_el.appendChild(pe)

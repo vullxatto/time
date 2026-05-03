@@ -1,6 +1,6 @@
 """Платёж за путёвку (финансовая сторона деятельности фирмы)."""
 
-from domain.entity import entity
+from domain.entity import Entity
 
 
 # Допустимые значения, используемые UI (для подсказок и проверок)
@@ -8,7 +8,7 @@ PAYMENT_METHODS = ('наличные', 'карта', 'перевод')
 PAYMENT_STATUSES = ('оплачен', 'в ожидании', 'отменён')
 
 
-class payment(entity):
+class Payment(Entity):
     """Платёж: дата, сумма, способ оплаты, статус и ссылка на путёвку.
 
     Связь с путёвкой реализована через хранение её кода (``package_code``).
@@ -18,47 +18,47 @@ class payment(entity):
     def __init__(self, code=0, package_code=0, date='', amount=0,
                  method='', status='в ожидании'):
         super().__init__(code)
-        self.setPackageCode(package_code)
-        self.setDate(date)
-        self.setAmount(amount)
-        self.setMethod(method)
-        self.setStatus(status)
+        self.set_package_code(package_code)
+        self.set_date(date)
+        self.set_amount(amount)
+        self.set_method(method)
+        self.set_status(status)
 
-    def setPackageCode(self, value):
+    def set_package_code(self, value):
         try:
             self.__package_code = int(value or 0)
         except (TypeError, ValueError):
             self.__package_code = 0
 
-    def setDate(self, value):
+    def set_date(self, value):
         self.__date = value or ''
 
-    def setAmount(self, value):
+    def set_amount(self, value):
         try:
             self.__amount = int(value or 0)
         except (TypeError, ValueError):
             self.__amount = 0
 
-    def setMethod(self, value):
+    def set_method(self, value):
         self.__method = value or ''
 
-    def setStatus(self, value):
+    def set_status(self, value):
         self.__status = value or 'в ожидании'
 
-    def getPackageCode(self):
+    def get_package_code(self):
         return self.__package_code
 
-    def getDate(self):
+    def get_date(self):
         return self.__date
 
-    def getAmount(self):
+    def get_amount(self):
         return self.__amount
 
-    def getMethod(self):
+    def get_method(self):
         return self.__method
 
-    def getStatus(self):
+    def get_status(self):
         return self.__status
 
-    def isPaid(self):
+    def is_paid(self):
         return self.__status == 'оплачен'

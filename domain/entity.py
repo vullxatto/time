@@ -1,14 +1,14 @@
 """Базовая сущность с уникальным кодом-идентификатором."""
 
 
-class entity:
+class Entity:
     """Любой объект предметной области, идентифицируемый целочисленным кодом."""
 
     def __init__(self, code=0):
-        self.setCode(code)
+        self.set_code(code)
 
-    def setCode(self, value):
+    def set_code(self, value):
         self.__code = value
 
-    def getCode(self):
+    def get_code(self):
         return self.__code

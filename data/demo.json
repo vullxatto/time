@@ -44,7 +44,7 @@
   "routes": [
     {
       "code": 1,
-      "name": "Турция, Анталия",
+      "name": "Турция",
       "climate": "Средиземноморский",
       "duration": 10,
       "hotel": "Rixos Premium Belek 5*",
@@ -52,7 +52,7 @@
     },
     {
       "code": 2,
-      "name": "ОАЭ, Дубай",
+      "name": "Дубай",
       "climate": "Тропический пустынный",
       "duration": 7,
       "hotel": "Atlantis The Palm 5*",
@@ -60,7 +60,7 @@
     },
     {
       "code": 3,
-      "name": "Италия, Рим и Флоренция",
+      "name": "Италия",
       "climate": "Умеренный",
       "duration": 9,
       "hotel": "Hotel Artemide 4*",
@@ -68,7 +68,7 @@
     },
     {
       "code": 4,
-      "name": "Таиланд, Пхукет",
+      "name": "Таиланд",
       "climate": "Тропический",
       "duration": 12,
       "hotel": "Katathani Phuket Beach Resort 5*",
@@ -76,11 +76,91 @@
     },
     {
       "code": 5,
-      "name": "Греция, Крит",
+      "name": "Греция",
       "climate": "Средиземноморский",
       "duration": 8,
       "hotel": "Creta Maris Beach Resort 5*",
       "cost": 88000
+    }
+  ],
+  "travels": [
+    {
+      "code": 1,
+      "date": "15.05.2026",
+      "quantity": 2,
+      "discount": 5,
+      "clients": [
+        1,
+        2
+      ],
+      "routes": [
+        1
+      ],
+      "airline_code": 2,
+      "touroperator_code": 1,
+      "manager_code": 1
+    },
+    {
+      "code": 2,
+      "date": "03.06.2026",
+      "quantity": 1,
+      "discount": 0,
+      "clients": [
+        3
+      ],
+      "routes": [
+        2
+      ],
+      "airline_code": 3,
+      "touroperator_code": 2,
+      "manager_code": 2
+    },
+    {
+      "code": 3,
+      "date": "20.06.2026",
+      "quantity": 1,
+      "discount": 12,
+      "clients": [
+        4
+      ],
+      "routes": [
+        3
+      ],
+      "airline_code": 1,
+      "touroperator_code": 2,
+      "manager_code": 1
+    },
+    {
+      "code": 4,
+      "date": "10.07.2026",
+      "quantity": 2,
+      "discount": 8,
+      "clients": [
+        2,
+        5
+      ],
+      "routes": [
+        4
+      ],
+      "airline_code": 3,
+      "touroperator_code": 3,
+      "manager_code": 3
+    },
+    {
+      "code": 5,
+      "date": "05.08.2026",
+      "quantity": 1,
+      "discount": 10,
+      "clients": [
+        4
+      ],
+      "routes": [
+        3,
+        4
+      ],
+      "airline_code": 4,
+      "touroperator_code": 4,
+      "manager_code": 2
     }
   ],
   "airlines": [
@@ -164,63 +244,6 @@
       "email": "lebedeva@travel.ru"
     }
   ],
-  "travels": [
-    {
-      "code": 1,
-      "date": "15.05.2026",
-      "quantity": 2,
-      "discount": 5,
-      "clients": [1, 2],
-      "routes": [1],
-      "airline_code": 2,
-      "touroperator_code": 1,
-      "manager_code": 1
-    },
-    {
-      "code": 2,
-      "date": "03.06.2026",
-      "quantity": 1,
-      "discount": 0,
-      "clients": [3],
-      "routes": [2],
-      "airline_code": 3,
-      "touroperator_code": 2,
-      "manager_code": 2
-    },
-    {
-      "code": 3,
-      "date": "20.06.2026",
-      "quantity": 4,
-      "discount": 12,
-      "clients": [1, 4, 5],
-      "routes": [3],
-      "airline_code": 1,
-      "touroperator_code": 2,
-      "manager_code": 1
-    },
-    {
-      "code": 4,
-      "date": "10.07.2026",
-      "quantity": 2,
-      "discount": 8,
-      "clients": [2, 5],
-      "routes": [4],
-      "airline_code": 3,
-      "touroperator_code": 3,
-      "manager_code": 3
-    },
-    {
-      "code": 5,
-      "date": "05.08.2026",
-      "quantity": 3,
-      "discount": 10,
-      "clients": [3, 4],
-      "routes": [5, 1],
-      "airline_code": 4,
-      "touroperator_code": 4,
-      "manager_code": 2
-    }
-  ],
   "payments": [
     {
       "code": 1,
@@ -253,6 +276,14 @@
       "amount": 239200,
       "method": "наличные",
       "status": "отменён"
+    },
+    {
+      "code": 5,
+      "package_code": 5,
+      "date": "13.05.2026",
+      "amount": 100000,
+      "method": "наличные",
+      "status": "оплачен"
     }
   ]
 }
