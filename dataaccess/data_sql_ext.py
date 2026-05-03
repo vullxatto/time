@@ -158,7 +158,7 @@ class DataSqlExt(DataSql):
             toc = t.get_tour_operator_code() if hasattr(t, 'get_tour_operator_code') else 0
             mc = t.get_manager_code() if hasattr(t, 'get_manager_code') else 0
             self.get_curs().execute(
-                'INSERT OR REPLACE INTO package('
+                'INSERT INTO package('
                 '  code, date, quantity, discount, '
                 '  airline_code, touroperator_code, manager_code) '
                 'VALUES (?, ?, ?, ?, ?, ?, ?)',
@@ -168,14 +168,14 @@ class DataSqlExt(DataSql):
     def write_airline_table(self):
         for a in self.get_lib().get_airline_list():
             self.get_curs().execute(
-                'INSERT OR REPLACE INTO airline(code, name, flight_cost) '
+                'INSERT INTO airline(code, name, flight_cost) '
                 'VALUES (?, ?, ?)',
                 (a.get_code(), a.get_name(), a.get_flight_cost()))
 
     def write_tour_operator_table(self):
         for t in self.get_lib().get_tour_operator_list():
             self.get_curs().execute(
-                'INSERT OR REPLACE INTO touroperator('
+                'INSERT INTO touroperator('
                 '  code, name, address, phone, website) '
                 'VALUES (?, ?, ?, ?, ?)',
                 (t.get_code(), t.get_name(), t.get_address(),
@@ -184,7 +184,7 @@ class DataSqlExt(DataSql):
     def write_manager_table(self):
         for m in self.get_lib().get_manager_list():
             self.get_curs().execute(
-                'INSERT OR REPLACE INTO manager('
+                'INSERT INTO manager('
                 '  code, surname, name, secname, position, phone, email) '
                 'VALUES (?, ?, ?, ?, ?, ?, ?)',
                 (m.get_code(), m.get_surname(), m.get_name(), m.get_secname(),
@@ -193,7 +193,7 @@ class DataSqlExt(DataSql):
     def write_payment_table(self):
         for p in self.get_lib().get_payment_list():
             self.get_curs().execute(
-                'INSERT OR REPLACE INTO payment('
+                'INSERT INTO payment('
                 '  code, package_code, date, amount, method, status) '
                 'VALUES (?, ?, ?, ?, ?, ?)',
                 (p.get_code(), p.get_package_code(), p.get_date(),

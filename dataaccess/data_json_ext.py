@@ -1,7 +1,10 @@
 """Расширенный JSON-сериализатор: добавляет авиа, туроп, менеджеров, платежи."""
 
 import json
+import logging
 from dataaccess.data_json import DataJson
+
+_log = logging.getLogger(__name__)
 
 
 class DataJsonExt(DataJson):
@@ -14,9 +17,7 @@ class DataJsonExt(DataJson):
         self.read_payments()
 
     def write(self):
-        # Перед записью обнуляем словарь данных родителя (он приватный), затем
-        # последовательно вызываем все writeXxx и наконец сериализуем.
-        setattr(self, '_DataJson__data', {})
+        self.clear_data()
         self.write_lists()
         self.write_airlines()
         self.write_tour_operators()
@@ -40,7 +41,7 @@ class DataJsonExt(DataJson):
                     int(a.get('manager_code', 0) or 0),
                 )
             except Exception as e:
-                print(f'Ошибка создания путёвки {code}: {e}')
+                _log.warning('Ошибка создания путёвки %s: %s', code, e)
                 continue
             if travel is None:
                 continue

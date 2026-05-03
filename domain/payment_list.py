@@ -13,8 +13,7 @@ class PaymentList(EntityList):
     def create_item(self, code, package_code=0, date='', amount=0,
                    method='', status='в ожидании'):
         if code in self.get_codes():
-            print(f'Платёж с кодом {code} уже существует')
-            return None
+            raise ValueError(f'Платёж с кодом {code} уже существует.')
         p = Payment(code, package_code, date, amount, method, status)
         super().append_item(p)
         return p

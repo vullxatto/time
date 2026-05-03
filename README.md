@@ -29,24 +29,25 @@
 travel/
 ├── domain/                       # модель предметной области
 │   ├── entity.py                 # базовый класс с уникальным кодом
-│   ├── namedentity.py            # сущность с атрибутом name
-│   ├── entitylist.py             # базовая коллекция сущностей
-│   ├── client.py / clientlist.py
-│   ├── route.py  / routelist.py
-│   ├── package.py / travellist.py        # путёвка
-│   ├── airline.py / airlinelist.py
-│   ├── touroperator.py / touroperatorlist.py
-│   ├── manager.py / managerlist.py
-│   ├── payment.py / paymentlist.py
-│   ├── package_ext.py / travellist_ext.py # путёвка с FK
-│   ├── TravelCompany.py                  # базовый агрегатор
-│   └── travelcompany_ext.py              # агрегатор с расширениями
+│   ├── named_entity.py           # сущность с атрибутом name
+│   ├── entity_list.py            # базовая коллекция сущностей
+│   ├── utils.py                  # общие утилиты (напр. to_int)
+│   ├── client.py / client_list.py
+│   ├── route.py  / route_list.py
+│   ├── package.py / travel_list.py       # путёвка
+│   ├── airline.py / airline_list.py
+│   ├── tour_operator.py / tour_operator_list.py
+│   ├── manager.py / manager_list.py
+│   ├── payment.py / payment_list.py
+│   ├── package_ext.py / travel_list_ext.py  # путёвка с FK
+│   ├── travel_company.py         # базовый агрегатор
+│   └── travel_company_ext.py     # агрегатор с расширениями
 │
 ├── dataaccess/                   # сериализация модели
 │   ├── data.py                   # абстрактный базовый класс
-│   ├── datajson.py / datajson_ext.py     # JSON
-│   ├── dataxml.py  / dataxml_ext.py      # XML
-│   └── datasql.py  / datasql_ext.py      # SQLite
+│   ├── data_json.py / data_json_ext.py   # JSON
+│   ├── data_xml.py  / data_xml_ext.py    # XML
+│   └── data_sql.py  / data_sql_ext.py    # SQLite
 │
 ├── web/                          # веб-интерфейс на CherryPy
 │   ├── layout.py                 # общий HTML-шаблон, экранирование, бейджи
@@ -162,6 +163,8 @@ FK — обычными целочисленными полями.
 ### SQLite
 9 таблиц: 7 для сущностей + 2 связки (`package_client`, `package_route`).
 Все запросы параметризованные. Все FK имеют ON DELETE/UPDATE CASCADE.
+При каждом открытии соединения выполняется `PRAGMA foreign_keys = ON`, иначе
+в SQLite ограничения FK по умолчанию не проверяются.
 
 ## Схема базы данных
 
@@ -186,18 +189,18 @@ payment(code, package_code UNIQUE, date, amount, method, status)
 Модель построена по принципу разделения ответственностей:
 
 - **`domain/`** — пассивные доменные объекты и коллекции, не знают
-  ничего о форматах хранения и интерфейсе. `entity` → `namedentity` →
+  ничего о форматах хранения и интерфейсе. `entity` → `named_entity` →
   конкретные сущности; параллельная иерархия для коллекций
-  `entityList` → специализированные списки.
+  `entity_list` → специализированные списки.
 
 - **`dataaccess/`** — сериализаторы. Базовая реализация работает с тремя
   ключевыми сущностями (`client`, `route`, `package`). Расширения
   (`*_ext`) добавляют поддержку четырёх дополнительных сущностей и FK
   через наследование, переопределяя методы `read()`, `write()`,
-  `readPackageTable()`/`writePackageTable()` и т.п.
+  `read_package_table()` / `write_package_table()` и т.п.
 
 - **`web/`** — CherryPy-страницы с CRUD-операциями. Каждая страница
-  принимает экземпляр библиотеки `TravelCompany_ext` и работает с ней
+  принимает экземпляр библиотеки `TravelCompanyExt` и работает с ней
   напрямую без промежуточного слоя сервисов. Общий шаблон, экранирование
   и стилизация вынесены в `web/layout.py`.
 
@@ -206,7 +209,7 @@ payment(code, package_code UNIQUE, date, amount, method, status)
 
 1. Создать классы `insurer` и `insurerList` в `domain/`.
 2. Добавить FK `insurer_code` в `package_ext`.
-3. Добавить методы `createInsurer/...` в `TravelCompany_ext`.
+3. Добавить методы `create_insurer` / … в `TravelCompanyExt`.
 4. Дополнить три сериализатора (`*_ext`) чтением/записью новой таблицы.
 5. Создать `web/insurerpage.py` и зарегистрировать в `start.py`.
 

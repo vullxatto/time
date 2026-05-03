@@ -147,9 +147,9 @@ class TravelCompanyExt(TravelCompany):
         # Проверяем 1:1 связь — один платёж на путёвку
         existing = self._payment_list.find_by_package(int(package_code or 0))
         if existing is not None and existing.get_code() != code:
-            print(f'У путёвки {package_code} уже есть платёж '
-                  f'{existing.get_code()} (связь 1:1)')
-            return None
+            raise ValueError(
+                f'У путёвки {package_code} уже есть платёж {existing.get_code()} '
+                f'(связь 1:1).')
         return self._payment_list.create_item(code, package_code, date, amount,
                                              method, status)
 
@@ -157,9 +157,9 @@ class TravelCompanyExt(TravelCompany):
                    method='', status='в ожидании'):
         existing = self._payment_list.find_by_package(int(package_code or 0))
         if existing is not None:
-            print(f'У путёвки {package_code} уже есть платёж '
-                  f'{existing.get_code()} (связь 1:1)')
-            return None
+            raise ValueError(
+                f'У путёвки {package_code} уже есть платёж {existing.get_code()} '
+                f'(связь 1:1).')
         return self._payment_list.new_item(package_code, date, amount,
                                           method, status)
 
@@ -174,6 +174,10 @@ class TravelCompanyExt(TravelCompany):
 
     def get_payment_list(self):
         return self._payment_list.get_items()
+
+    def get_payment_codes(self):
+        """Коды всех платежей (аналогично ``get_client_codes`` / ``get_travel_codes``)."""
+        return self._payment_list.get_codes()
 
     def get_payment_new_code(self):
         return self._payment_list.get_new_code()

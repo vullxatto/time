@@ -146,7 +146,15 @@ class Root:
             f'<option value="{f}"{" selected" if f == default_fmt else ""}>{f}</option>'
             for f in ('JSON', 'XML', 'SQL')
         )
+        warn = ''
+        if loaded:
+            warn = (
+                '<p class="muted">Внимание: при открытии другого файла текущие '
+                'данные в памяти будут заменены содержимым выбранного файла '
+                '(несохранённые изменения пропадут).</p>'
+            )
         return f'''
+{warn}
 <form action="/openfile" method="post">
 <table>
 <tr><td>Файл:</td><td><input name="fname" value="{esc(default_name)}" size="40"></td></tr>
@@ -175,5 +183,8 @@ if __name__ == '__main__':
     cherrypy.config.update({
         'server.socket_host': '127.0.0.1',
         'server.socket_port': 8080,
+        # Не задавать thread_pool слишком малым: браузер открывает несколько
+        # соединений подряд; при pool=1 запросы выстраиваются в хвост и кажется,
+        # что страница «не грузится», пока не придёт второй клик.
     })
     cherrypy.quickstart(Root(), '/')

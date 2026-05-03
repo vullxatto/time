@@ -12,8 +12,7 @@ class TravelList(EntityList):
 
     def create_item(self, code, date='', quantity=0, discount=0):
         if code in self.get_codes():
-            print(f'Путёвка с кодом {code} уже существует')
-            return None
+            raise ValueError(f'Путёвка с кодом {code} уже существует.')
         p = Package(code, date, quantity, discount)
         p._library = getattr(self, '_parent_library', None)
         super().append_item(p)

@@ -6,19 +6,27 @@ from dataaccess.data import Data
 
 class DataJson(Data):
 
+    def __init__(self, lib=None, inp='', out=''):
+        super().__init__(lib, inp, out)
+        self._data = {}
+
+    def clear_data(self):
+        """Очищает буфер перед полной перезаписью файла (база и расширения JSON)."""
+        self._data = {}
+
     def get_data(self):
-        return self.__data
+        return self._data
 
     def read(self):
         with open(self.get_inp(), 'r', encoding='utf-8') as f:
-            self.__data = json.load(f)
+            self._data = json.load(f)
         self.read_lists()
 
     def write(self):
-        self.__data = {}
+        self.clear_data()
         self.write_lists()
         with open(self.get_out(), 'w', encoding='utf-8') as f:
-            json.dump(self.__data, f, indent=2, ensure_ascii=False)
+            json.dump(self._data, f, indent=2, ensure_ascii=False)
 
     def read_clients(self):
         for a in self.get_data().get('clients', []):

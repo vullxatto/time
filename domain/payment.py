@@ -1,6 +1,7 @@
 """Платёж за путёвку (финансовая сторона деятельности фирмы)."""
 
 from domain.entity import Entity
+from domain.utils import to_int
 
 
 # Допустимые значения, используемые UI (для подсказок и проверок)
@@ -25,19 +26,13 @@ class Payment(Entity):
         self.set_status(status)
 
     def set_package_code(self, value):
-        try:
-            self.__package_code = int(value or 0)
-        except (TypeError, ValueError):
-            self.__package_code = 0
+        self.__package_code = to_int(value)
 
     def set_date(self, value):
         self.__date = value or ''
 
     def set_amount(self, value):
-        try:
-            self.__amount = int(value or 0)
-        except (TypeError, ValueError):
-            self.__amount = 0
+        self.__amount = to_int(value)
 
     def set_method(self, value):
         self.__method = value or ''

@@ -6,6 +6,7 @@
 """
 
 from domain.package import Package
+from domain.utils import to_int
 
 
 class PackageExt(Package):
@@ -18,27 +19,20 @@ class PackageExt(Package):
         self.set_tour_operator_code(touroperator_code)
         self.set_manager_code(manager_code)
 
-    @staticmethod
-    def _to_int(value):
-        try:
-            return int(value or 0)
-        except (TypeError, ValueError):
-            return 0
-
     def set_airline_code(self, value):
-        self.__airline_code = self._to_int(value)
+        self.__airline_code = to_int(value)
 
     def get_airline_code(self):
         return self.__airline_code
 
     def set_tour_operator_code(self, value):
-        self.__touroperator_code = self._to_int(value)
+        self.__touroperator_code = to_int(value)
 
     def get_tour_operator_code(self):
         return self.__touroperator_code
 
     def set_manager_code(self, value):
-        self.__manager_code = self._to_int(value)
+        self.__manager_code = to_int(value)
 
     def get_manager_code(self):
         return self.__manager_code

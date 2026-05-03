@@ -16,13 +16,13 @@ class DataXmlExt(DataXml):
             if node.nodeType != node.ELEMENT_NODE:
                 continue
             if node.nodeName == 'airlines':
-                self._readAirlines(node)
+                self._read_airlines(node)
             elif node.nodeName == 'touroperators':
-                self._readTourOperators(node)
+                self._read_tour_operators(node)
             elif node.nodeName == 'managers':
-                self._readManagers(node)
+                self._read_managers(node)
             elif node.nodeName == 'payments':
-                self._readPayments(node)
+                self._read_payments(node)
 
     def _patch_travel_fk(self, root):
         """Дозаполняет airline_code/touroperator_code/manager_code у уже созданных путёвок."""
@@ -41,7 +41,7 @@ class DataXmlExt(DataXml):
                 if hasattr(t, 'set_manager_code'):
                     t.set_manager_code(int(tr.getAttribute('manager_code') or 0))
 
-    def _readAirlines(self, node):
+    def _read_airlines(self, node):
         for a in node.getElementsByTagName('airline'):
             try:
                 fc = int(a.getAttribute('flight_cost') or 0)
@@ -53,7 +53,7 @@ class DataXmlExt(DataXml):
                 fc,
             )
 
-    def _readTourOperators(self, node):
+    def _read_tour_operators(self, node):
         for t in node.getElementsByTagName('touroperator'):
             self.get_lib().create_tour_operator(
                 int(t.getAttribute('code') or 0),
@@ -63,7 +63,7 @@ class DataXmlExt(DataXml):
                 t.getAttribute('website') or '',
             )
 
-    def _readManagers(self, node):
+    def _read_managers(self, node):
         for m in node.getElementsByTagName('manager'):
             self.get_lib().create_manager(
                 int(m.getAttribute('code') or 0),
@@ -75,7 +75,7 @@ class DataXmlExt(DataXml):
                 m.getAttribute('email') or '',
             )
 
-    def _readPayments(self, node):
+    def _read_payments(self, node):
         for p in node.getElementsByTagName('payment'):
             try:
                 amount = int(p.getAttribute('amount') or 0)
@@ -97,16 +97,16 @@ class DataXmlExt(DataXml):
         # унаследованные секции
         self._write_clients(dom, root)
         self._write_routes(dom, root)
-        self._writeTravelsExt(dom, root)
+        self._write_travels_ext(dom, root)
         # новые секции
-        self._writeAirlines(dom, root)
-        self._writeTourOperators(dom, root)
-        self._writeManagers(dom, root)
-        self._writePayments(dom, root)
+        self._write_airlines(dom, root)
+        self._write_tour_operators(dom, root)
+        self._write_managers(dom, root)
+        self._write_payments(dom, root)
         with open(self.get_out(), 'w', encoding='utf-8') as f:
             f.write(dom.toprettyxml(indent='  '))
 
-    def _writeTravelsExt(self, dom, root):
+    def _write_travels_ext(self, dom, root):
         travels = dom.createElement('travels')
         root.appendChild(travels)
         for t in self.get_lib().get_travel_list():
@@ -132,7 +132,7 @@ class DataXmlExt(DataXml):
             tr.appendChild(rt_elem)
             travels.appendChild(tr)
 
-    def _writeAirlines(self, dom, root):
+    def _write_airlines(self, dom, root):
         airlines_el = dom.createElement('airlines')
         root.appendChild(airlines_el)
         for a in self.get_lib().get_airline_list():
@@ -142,7 +142,7 @@ class DataXmlExt(DataXml):
             al.setAttribute('flight_cost', str(a.get_flight_cost()))
             airlines_el.appendChild(al)
 
-    def _writeTourOperators(self, dom, root):
+    def _write_tour_operators(self, dom, root):
         ops_el = dom.createElement('touroperators')
         root.appendChild(ops_el)
         for op in self.get_lib().get_tour_operator_list():
@@ -154,7 +154,7 @@ class DataXmlExt(DataXml):
             te.setAttribute('website', op.get_website() or '')
             ops_el.appendChild(te)
 
-    def _writeManagers(self, dom, root):
+    def _write_managers(self, dom, root):
         mgrs_el = dom.createElement('managers')
         root.appendChild(mgrs_el)
         for m in self.get_lib().get_manager_list():
@@ -168,7 +168,7 @@ class DataXmlExt(DataXml):
             me.setAttribute('email', m.get_email() or '')
             mgrs_el.appendChild(me)
 
-    def _writePayments(self, dom, root):
+    def _write_payments(self, dom, root):
         pays_el = dom.createElement('payments')
         root.appendChild(pays_el)
         for p in self.get_lib().get_payment_list():

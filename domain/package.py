@@ -46,7 +46,7 @@ class Package(Entity):
         ``_library`` со ссылкой на ``TravelCompany`` — он используется для
         разрешения кода в объект клиента.
         """
-        client_obj = self._resolve(value, 'get_client')
+        client_obj = self._resolve(value, 'get_client', 'клиент')
         if client_obj is not None and client_obj not in self.__clients:
             self.__clients.append(client_obj)
 
@@ -65,7 +65,7 @@ class Package(Entity):
     # --- маршруты ---
     def append_route(self, value):
         """Добавляет маршрут (объект или код); см. ``append_client``."""
-        route_obj = self._resolve(value, 'get_route')
+        route_obj = self._resolve(value, 'get_route', 'маршрут')
         if route_obj is not None and route_obj not in self.__routes:
             self.__routes.append(route_obj)
 
@@ -82,7 +82,7 @@ class Package(Entity):
         return [r.get_code() for r in self.__routes]
 
     # --- helpers ---
-    def _resolve(self, value, library_method):
+    def _resolve(self, value, library_method, kind_label):
         """Возвращает объект сущности по коду или сам объект, если он передан.
 
         ``library_method`` — имя метода у ``self._library`` для поиска по коду
@@ -91,8 +91,14 @@ class Package(Entity):
         if isinstance(value, int):
             lib = getattr(self, '_library', None)
             if lib is None:
-                return None
-            return getattr(lib, library_method)(value)
+                raise ValueError(
+                    f'Нельзя разрешить код {kind_label} {value}: к путёвке не '
+                    f'привязана библиотека (TravelCompany).')
+            obj = getattr(lib, library_method)(value)
+            if obj is None:
+                raise ValueError(
+                    f'{kind_label.capitalize()} с кодом {value} не найден(а).')
+            return obj
         if hasattr(value, 'get_code'):
             return value
         return None

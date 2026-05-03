@@ -9,8 +9,7 @@ class TravelListExt(TravelList):
     def create_item(self, code, date='', quantity=0, discount=0,
                    airline_code=0, touroperator_code=0, manager_code=0):
         if code in self.get_codes():
-            print(f'Путёвка с кодом {code} уже существует')
-            return None
+            raise ValueError(f'Путёвка с кодом {code} уже существует.')
         p = PackageExt(code, date, quantity, discount,
                         airline_code, touroperator_code, manager_code)
         p._library = getattr(self, '_parent_library', None)

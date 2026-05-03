@@ -14,12 +14,18 @@ from dataaccess.data import Data
 class DataSql(Data):
     """Сериализатор модели в SQLite."""
 
+    def __init__(self, lib=None, inp='', out=''):
+        super().__init__(lib, inp, out)
+        self.__conn = None
+        self.__curs = None
+
     def get_curs(self):
         return self.__curs
 
     def read(self):
         self.__conn = db.connect(self.get_inp())
         self.__curs = self.__conn.cursor()
+        self.__curs.execute('PRAGMA foreign_keys = ON')
         try:
             self.read_tables()
         finally:
@@ -28,6 +34,7 @@ class DataSql(Data):
     def write(self):
         self.__conn = db.connect(self.get_out())
         self.__curs = self.__conn.cursor()
+        self.__curs.execute('PRAGMA foreign_keys = ON')
         try:
             self.create_tables()
             self.write_tables()
